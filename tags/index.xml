@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Tags on Bigeco.ai</title>
+    <link>https://bigeco.github.io/tags/</link>
+    <description>Recent content in Tags on Bigeco.ai</description>
+    <generator>Hugo -- 0.153.2</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 24 Dec 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://bigeco.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hugo</title>
+      <link>https://bigeco.github.io/tags/hugo/</link>
+      <pubDate>Tue, 24 Dec 2024 00:00:00 +0000</pubDate>
+      <guid>https://bigeco.github.io/tags/hugo/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Test</title>
+      <link>https://bigeco.github.io/tags/test/</link>
+      <pubDate>Tue, 24 Dec 2024 00:00:00 +0000</pubDate>
+      <guid>https://bigeco.github.io/tags/test/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Test1</title>
+      <link>https://bigeco.github.io/tags/test1/</link>
+      <pubDate>Tue, 24 Dec 2024 00:00:00 +0000</pubDate>
+      <guid>https://bigeco.github.io/tags/test1/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Test2</title>
+      <link>https://bigeco.github.io/tags/test2/</link>
+      <pubDate>Tue, 24 Dec 2024 00:00:00 +0000</pubDate>
+      <guid>https://bigeco.github.io/tags/test2/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Test3</title>
+      <link>https://bigeco.github.io/tags/test3/</link>
+      <pubDate>Tue, 24 Dec 2024 00:00:00 +0000</pubDate>
+      <guid>https://bigeco.github.io/tags/test3/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Test4</title>
+      <link>https://bigeco.github.io/tags/test4/</link>
+      <pubDate>Tue, 24 Dec 2024 00:00:00 +0000</pubDate>
+      <guid>https://bigeco.github.io/tags/test4/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Test5</title>
+      <link>https://bigeco.github.io/tags/test5/</link>
+      <pubDate>Tue, 24 Dec 2024 00:00:00 +0000</pubDate>
+      <guid>https://bigeco.github.io/tags/test5/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Test6</title>
+      <link>https://bigeco.github.io/tags/test6/</link>
+      <pubDate>Tue, 24 Dec 2024 00:00:00 +0000</pubDate>
+      <guid>https://bigeco.github.io/tags/test6/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>
