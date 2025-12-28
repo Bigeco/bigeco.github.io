@@ -1,32 +1,14 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
-  <channel>
-    <title>Bigeco.ai</title>
-    <link>http://localhost:1313/</link>
-    <description>Recent content on Bigeco.ai</description>
-    <generator>Hugo -- 0.153.2</generator>
-    <language>en-us</language>
-    <lastBuildDate>Tue, 24 Dec 2024 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>푸리에 변환 뽀개기 1</title>
-      <link>http://localhost:1313/blog/my-first-post/</link>
-      <pubDate>Tue, 24 Dec 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/blog/my-first-post/</guid>
-      <description>&lt;h1 id=&#34;welcome-to-my-blog&#34;&gt;Welcome to My Blog&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Bigeco.ai</title><link>https://bigeco.github.io/</link><description>Recent content on Bigeco.ai</description><generator>Hugo -- 0.153.2</generator><language>en-us</language><lastBuildDate>Tue, 24 Dec 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://bigeco.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>푸리에 변환 뽀개기 1</title><link>https://bigeco.github.io/blog/my-first-post/</link><pubDate>Tue, 24 Dec 2024 00:00:00 +0000</pubDate><guid>https://bigeco.github.io/blog/my-first-post/</guid><description>&lt;h1 id="welcome-to-my-blog"&gt;Welcome to My Blog&lt;/h1&gt;
 &lt;p&gt;This is my first post using Hugo and PaperMod theme!&lt;/p&gt;
-&lt;h2 id=&#34;features&#34;&gt;Features&lt;/h2&gt;
+&lt;h2 id="features"&gt;Features&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Clean design&lt;/li&gt;
 &lt;li&gt;Fast loading&lt;/li&gt;
 &lt;li&gt;Easy to customize&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;print(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Hello, Hugo!&amp;#34;&lt;/span&gt;)
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;print(&lt;span style="color:#e6db74"&gt;&amp;#34;Hello, Hugo!&amp;#34;&lt;/span&gt;)
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;한글 폰트 테스트
 안녕하세요
 한글 폰트 테스트
 한글 폰트 테스트&lt;/p&gt;
-&lt;p&gt;Let&amp;rsquo;s start blogging! 🚀&lt;/p&gt;</description>
-    </item>
-  </channel>
-</rss>
+&lt;p&gt;Let&amp;rsquo;s start blogging! 🚀&lt;/p&gt;</description></item></channel></rss>
