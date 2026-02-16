@@ -38,6 +38,11 @@ a.btncv:hover {
   text-decoration: none !important;
 }
 
+/* CV 페이지 PDF 아이콘: 다크 모드에서 밝게 */
+html[data-theme="dark"] .cv-pdf-icon {
+  filter: brightness(0) invert(1);
+}
+
 /*****************************
  * CV TIME_TABLE styles
  *****************************/

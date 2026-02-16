@@ -182,6 +182,11 @@ ul.task-list input[type="checkbox"] {
         width: 3.2rem;
         height: 3.2rem;
         margin-bottom: 1rem;
+        transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      &:hover img {
+        opacity: 0.65;
       }
 
       svg {
@@ -213,6 +218,14 @@ ul.task-list input[type="checkbox"] {
   .contact-note {
     font-size: 0.8rem;
   }
+}
+
+// ---- change :: social dark mode 
+html[data-theme="dark"] .social .contact-icons a img {
+  filter: brightness(0) invert(1);
+  transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .wechat-modal {
