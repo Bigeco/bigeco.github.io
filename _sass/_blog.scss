@@ -64,6 +64,10 @@ html[data-theme="dark"] .tag-category-list ul li a {
 }
 
 .post-title {
+  font-weight: 305;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
   mjx-container[jax="CHTML"][display="true"] {
     display: unset;
   }
