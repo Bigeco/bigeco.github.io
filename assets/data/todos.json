@@ -48,6 +48,26 @@
         "text": "[하이빅쌤 강의] 한국어에 없는 모음 소리 조각 2 수강",
         "done": true
       }
+    ],
+    "2026-07-01": [
+      {
+        "id": "mr0vpmrgr5wu",
+        "cat": "study",
+        "text": "[하이빅쌤 강의] 한국어에 없는 모음 소리 조각 1 복습",
+        "done": false
+      },
+      {
+        "id": "mr0vppjq2y8a",
+        "cat": "study",
+        "text": "[하이빅쌤 강의] 한국어에 없는 모음 소리 조각 2 복습",
+        "done": false
+      },
+      {
+        "id": "mr0vq4fuunyi",
+        "cat": "study",
+        "text": "[하이빅쌤 강의] 한국어에 없는 자음 소리 조각 1 수강",
+        "done": false
+      }
     ]
   }
 }
