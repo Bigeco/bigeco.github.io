@@ -35,18 +35,18 @@
         "done": true
       }
     ],
-    "2026-06-28": [
+    "2026-06-30": [
       {
-        "id": "mqwt24nyqqqc",
+        "id": "mr0vozsfddsn",
         "cat": "study",
         "text": "[하이빅쌤 강의] 한국어에 없는 모음 소리 조각 1 복습",
-        "done": false
+        "done": true
       },
       {
-        "id": "mqwt29mo1my5",
+        "id": "mr0vp4gssfcf",
         "cat": "study",
         "text": "[하이빅쌤 강의] 한국어에 없는 모음 소리 조각 2 수강",
-        "done": false
+        "done": true
       }
     ]
   }
