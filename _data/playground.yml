@@ -1,0 +1,65 @@
+# Home page Playground items.
+# Add a new entry below to show another tile. Order = display order.
+#
+# Fields:
+#   title:      project title (required)
+#   year:       project year
+#   client:     client or organization
+#   role:       your role
+#   thumbnail:  square mosaic image URL/path (falls back to image)
+#   image:      large detail image URL/path (required)
+#   brief:      detail modal description
+
+- title: "Counterpoint"
+  year: 2026
+  client: "Atelier Borel"
+  role: "Lead Designer"
+  thumbnail: "https://images.unsplash.com/photo-1609605348579-3123e3d40eb8?w=600&h=600&fit=crop&q=70&auto=format"
+  image: "https://images.unsplash.com/photo-1609605348579-3123e3d40eb8?w=1600&h=900&fit=crop&q=75&auto=format"
+  brief: >-
+    프로젝트의 배경, 접근 방식, 결과에 대한 설명을 여기에 입력하세요.
+
+- title: "Field Notes"
+  year: 2025
+  client: "Maison Klein"
+  role: "Art Direction"
+  thumbnail: "https://images.unsplash.com/photo-1533226458520-6f71cffeaa6a?w=600&h=600&fit=crop&q=70&auto=format"
+  image: "https://images.unsplash.com/photo-1533226458520-6f71cffeaa6a?w=1600&h=900&fit=crop&q=75&auto=format"
+  brief: >-
+    프로젝트의 배경, 접근 방식, 결과에 대한 설명을 여기에 입력하세요.
+
+- title: "Minor Index"
+  year: 2025
+  client: "Volume Zero"
+  role: "Type & Layout"
+  thumbnail: "https://images.unsplash.com/photo-1617050318658-a9a3175e34cb?w=600&h=600&fit=crop&q=70&auto=format"
+  image: "https://images.unsplash.com/photo-1617050318658-a9a3175e34cb?w=1600&h=900&fit=crop&q=75&auto=format"
+  brief: >-
+    프로젝트의 배경, 접근 방식, 결과에 대한 설명을 여기에 입력하세요.
+
+- title: "Long Form"
+  year: 2024
+  client: "Studio Forme"
+  role: "Creative Direction"
+  thumbnail: "https://images.unsplash.com/photo-1461958508236-9a742665a0d5?w=600&h=600&fit=crop&q=70&auto=format"
+  image: "https://images.unsplash.com/photo-1461958508236-9a742665a0d5?w=1600&h=900&fit=crop&q=75&auto=format"
+  brief: >-
+    프로젝트의 배경, 접근 방식, 결과에 대한 설명을 여기에 입력하세요.
+
+- title: "Working Title"
+  year: 2024
+  client: "Index Magazine"
+  role: "Lead Designer"
+  thumbnail: "https://images.unsplash.com/photo-1596299786007-9974099be52b?w=600&h=600&fit=crop&q=70&auto=format"
+  image: "https://images.unsplash.com/photo-1596299786007-9974099be52b?w=1600&h=900&fit=crop&q=75&auto=format"
+  brief: >-
+    프로젝트의 배경, 접근 방식, 결과에 대한 설명을 여기에 입력하세요.
+
+- title: "Volume One"
+  year: 2023
+  client: "Office of Things"
+  role: "Art Direction"
+  thumbnail: "https://images.unsplash.com/photo-1581080247486-57989c1f14ab?w=600&h=600&fit=crop&q=70&auto=format"
+  image: "https://images.unsplash.com/photo-1581080247486-57989c1f14ab?w=1600&h=900&fit=crop&q=75&auto=format"
+  brief: >-
+    프로젝트의 배경, 접근 방식, 결과에 대한 설명을 여기에 입력하세요.

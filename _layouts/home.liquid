@@ -711,57 +711,52 @@ layout: default
 {% endraw %}
 
 {% comment %} ===== Playground 모자이크 + 상세 모달 + Publications 아코디언 ===== {% endcomment %}
+<script id="playground-data" type="application/json">
+  {{ site.data.playground | default: empty | jsonify }}
+</script>
 {% raw %}
 <script>
   (function () {
     /* ---------- Playground 모자이크 ---------- */
-    const TILE_COUNT = 96;
-    const IDS = [
-      "1609605348579-3123e3d40eb8","1533226458520-6f71cffeaa6a","1617050318658-a9a3175e34cb",
-      "1461958508236-9a742665a0d5","1596299786007-9974099be52b","1581080247486-57989c1f14ab",
-      "1611532736597-de2d4265fba3","1513909894411-7d7e04c28ecd","1603204254626-d0de8eb24cf1",
-      "1619632973808-4acf8041df42","1505356822725-08ad25f3ffe4","1566978862346-73282aa378a4",
-      "1617575521317-d2974f3b56d2","1610454059909-f9a5a6eb4e58","1504625709867-b4e45e3bb9dd",
-      "1446771326090-d910bfaf00f6","1536924491042-b0466800ce46","1625390711106-3728815ebcd9",
-      "1595658511703-2cad160de181","1591280122880-eec70c6a5810","1600730424902-a3a3be6af112",
-      "1522743791393-522312deeebf","1609670530579-fe311b3630cc","1469474968028-56623f02e42e"
-    ];
-    const YEARS = [2026, 2025, 2025, 2024, 2024, 2023, 2023, 2022, 2021, 2019];
-    const TITLES = ["Counterpoint","Field Notes","Minor Index","Long Form","Working Title","Volume One","Inventory","After Image","Open Set","New Standard","Footnote","Reprint"];
-    const CLIENTS = ["Atelier Borel","Maison Klein","Volume Zero","Studio Forme","Index Magazine","Office of Things"];
-    const ROLES = ["Lead Designer","Art Direction","Type & Layout","Creative Direction"];
-    const BRIEF = "설명을 여기에 넣으세요. 각 작업의 배경, 접근 방식, 결과를 자유롭게 적을 수 있습니다. (지금은 예시 텍스트입니다.)";
-    const img = (id) => `https://images.unsplash.com/photo-${id}?w=600&h=600&fit=crop&q=70&auto=format`;
-    const imgLarge = (id) => `https://images.unsplash.com/photo-${id}?w=1600&h=900&fit=crop&q=75&auto=format`;
+    const dataNode = document.getElementById("playground-data");
+    let data = [];
+    try {
+      data = JSON.parse(dataNode ? dataNode.textContent : "[]");
+    } catch (error) {
+      console.warn("[folio] Playground 데이터를 읽지 못했습니다.", error);
+    }
 
     const mosaic = document.getElementById("mosaic");
     const count = document.getElementById("pg-count");
-    const data = [];
     if (mosaic) {
-      count && (count.textContent = TILE_COUNT + " Items");
+      count && (count.textContent = data.length + (data.length === 1 ? " Item" : " Items"));
       const tiles = [];
-      for (let i = 0; i < TILE_COUNT; i++) {
-        const id = IDS[i % IDS.length];
-        const p = {
-          num: String(i + 1).padStart(3, "0"),
-          year: YEARS[i % YEARS.length],
-          title: TITLES[i % TITLES.length] + " №" + String((i % 12) + 1).padStart(2, "0"),
-          client: CLIENTS[i % CLIENTS.length],
-          role: ROLES[i % ROLES.length],
-          img: imgLarge(id),
-        };
-        data.push(p);
+      data.forEach((p, i) => {
+        p.num = String(i + 1).padStart(3, "0");
         const a = document.createElement("a");
         a.className = "tile";
         a.href = "#";
         a.setAttribute("role", "listitem");
-        a.innerHTML =
-          '<img src="' + img(id) + '" alt="' + p.title + '" loading="' + (i < 12 ? "eager" : "lazy") + '" decoding="async">' +
-          '<div class="tile__label"><span>[' + p.num + ']</span><span>' + p.year + '</span></div>';
+
+        const image = document.createElement("img");
+        image.src = p.thumbnail || p.image;
+        image.alt = p.title || "Playground item";
+        image.loading = i < 12 ? "eager" : "lazy";
+        image.decoding = "async";
+
+        const label = document.createElement("div");
+        label.className = "tile__label";
+        const number = document.createElement("span");
+        number.textContent = "[" + p.num + "]";
+        const year = document.createElement("span");
+        year.textContent = p.year || "";
+        label.append(number, year);
+        a.append(image, label);
+
         a.addEventListener("click", (e) => { e.preventDefault(); openDetail(i); });
         mosaic.appendChild(a);
         tiles.push(a);
-      }
+      });
 
       const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
       if (reduce) {
@@ -798,13 +793,13 @@ layout: default
     function openDetail(i) {
       const p = data[i];
       if (!p || !detail) return;
-      dImg.src = p.img; dImg.alt = p.title;
-      dTitle.textContent = p.title;
+      dImg.src = p.image || p.thumbnail; dImg.alt = p.title || "Playground item";
+      dTitle.textContent = p.title || "";
       dCrumb.textContent = "№" + p.num;
-      dClient.textContent = p.client;
-      dYear.textContent = p.year;
-      dRole.textContent = p.role;
-      dBrief.textContent = BRIEF;
+      dClient.textContent = p.client || "";
+      dYear.textContent = p.year || "";
+      dRole.textContent = p.role || "";
+      dBrief.textContent = p.brief || "";
       detail.dataset.open = "true";
       detail.setAttribute("aria-hidden", "false");
       document.body.style.overflow = "hidden";
