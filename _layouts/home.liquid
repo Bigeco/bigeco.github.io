@@ -1,0 +1,759 @@
+---
+layout: default
+---
+
+{% comment %} ===== Folio home + Liquid Glass (VFX-JS) =====
+  Liquid glass post-effect by Amagi (MIT) — https://codepen.io/fand/pen/azmPjqd
+  VFX-JS — https://amagi.dev/vfx-js/
+{% endcomment %}
+
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet" />
+
+<style>
+  /* 이 <style> 블록은 home 레이아웃(=홈 페이지)에서만 출력되므로,
+     아래 규칙들은 :has() 없이도 홈에만 적용됩니다. (구형 브라우저 호환) */
+
+  /* al-folio 기본 네비바 / 푸터 / 헤더 숨기기 */
+  #navbar,
+  footer,
+  .post .post-header { display: none !important; }
+
+  /* 스크롤 완전 차단 + 정확히 한 화면 */
+  html,
+  body {
+    height: 100%;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+  .container.mt-5,
+  .container[role="main"] {
+    margin: 0 !important;
+    padding: 0 !important;
+    max-width: 100% !important;
+    height: 100dvh;
+    overflow: hidden;
+  }
+
+  .folio-home {
+    /* ── 라이트(기본) 색상 ── */
+    --fg: rgb(50, 50, 50);
+    --muted: #9a9a96;
+    --line: #cfcfcb;
+    --bg: #ececea;
+    --cap: #4a4a48;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: "Google Sans", "Inter", system-ui, -apple-system, sans-serif;
+    font-optical-sizing: auto;
+    font-variation-settings: "GRAD" 0;
+    position: relative;    /* 토글 버튼의 기준 */
+    height: 100vh;         /* dvh 미지원 브라우저 폴백 */
+    height: 100dvh;        /* 모바일 주소창 변화까지 반영한 실제 화면 높이 */
+    overflow: hidden;      /* 넘치는 부분은 잘라 스크롤 방지 */
+    padding: clamp(1rem, 2.5vh, 2.2rem) 24px clamp(1rem, 2.5vh, 2.4rem);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* al-folio는 테마 전환 시 <html>에 .transition 을 붙여 모든 요소의 색/크기를
+     서서히 바꿉니다(transition: all). 이게 유리 캔버스 크기까지 애니메이션시켜
+     '작아졌다 커지는' 깜빡임을 만들고, 중간 회색 프레임이 캡처되기도 합니다.
+     → 홈에서는 전환 애니메이션을 완전히 꺼서 색/크기가 즉시 확정되게 함.
+     (이 스타일은 홈에서만 출력되므로 다른 페이지엔 영향 없음) */
+  html.transition,
+  html.transition *,
+  html.transition *::before,
+  html.transition *::after {
+    transition: none !important;
+  }
+
+  /* ── 다크 색상: 배경 완전 검정 ── */
+  [data-theme="dark"] .folio-home {
+    --fg: #f4f4f4;
+    --muted: #5c5c5c;
+    --line: #262626;
+    --bg: #000000;
+    --cap: #8a8a8a;
+  }
+
+  [data-theme="dark"] .folio-illus {
+    filter: invert(1);
+  }
+
+  .folio-top {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;   /* 좌: 오픈 문구 / 중앙: 브랜드 / 우: 소셜 */
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.8rem;
+    line-height: 1.35;
+  }
+  .folio-top .brand {
+    justify-self: start;                   /* 왼쪽으로 이동 */
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-weight: 415;                      /* 더 얇게 */
+    font-size: 1.4rem;
+    letter-spacing: 0;                     /* 자간 살짝 줄임 */
+    white-space: nowrap;
+  }
+  .folio-top .brand span {
+    color: var(--fg);  /* 전역 span color 덮어쓰기 + 다크모드 전환 */
+  }
+  .folio-top .brand-logo { width: 1.5rem; height: 1.5rem; object-fit: contain; flex-shrink: 0; }
+  .folio-top .brand sup { font-size: 0.55em; }
+  /* 가운데 단독 로고 (icon.svg) */
+  .folio-top .folio-mark { justify-self: center; width: 1.6rem; height: 1.6rem; flex-shrink: 0; color: var(--fg); }
+
+  /* 우상단 소셜 아이콘 */
+  .folio-socials {
+    justify-self: end;
+    display: flex;
+    gap: 0.55rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .folio-socials a {
+    width: 2.4rem;
+    height: 2.4rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    color: var(--fg);
+    opacity: 0.55;                 /* 기본: 살짝 연하게 */
+    transition: opacity 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+  }
+  .folio-socials a:hover,
+  .folio-socials a:focus-visible {
+    opacity: 1;                    /* 호버: 색이 살짝 진해짐 */
+    background-color: color-mix(in srgb, var(--fg) 7%, transparent);
+    border-color: color-mix(in srgb, var(--fg) 32%, var(--line));
+  }
+  .folio-socials svg { height: 1.15rem; width: auto; display: block; }
+
+  .folio-hero {
+    text-align: center;
+    line-height: 0.82;
+    margin: clamp(0.5rem, 2vh, 2rem) 0;
+    flex: 1 1 auto;
+    min-height: 0;         /* flex 자식이 화면 높이에 맞게 줄어들 수 있도록 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.2em;
+  }
+  /* min(가로폭, 화면높이) 로 상한을 걸어 낮은 화면에서도 글자가 넘치지 않게 */
+  .folio-hero .script {
+    font-weight: 500;                 /* Google Sans (folio-home에서 상속), 얇게 */
+    letter-spacing: -0.02em;
+    font-size: clamp(2.75rem, min(16vw, 20vh), 15rem);
+    color: var(--fg);                 /* 전역 span color 덮어쓰기 + 다크모드 전환 */
+  }
+  .folio-hero .bold {
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    font-size: clamp(2.75rem, min(16vw, 20vh), 15rem);
+    color: var(--fg);
+  }
+  .folio-hero sup {
+    font-size: clamp(1rem, 2.5vw, 2.2rem);
+    font-weight: 400;
+    vertical-align: top;
+    align-self: flex-start;
+    margin-top: 0.4em;
+  }
+
+  .folio-nav {
+    display: flex;
+    justify-content: space-between;   /* 01–05 + ©를 전체 폭에 고르게 */
+    gap: 1rem;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    border-top: 1px solid var(--line);
+    padding-top: 0.9rem;
+    font-size: 0.9rem;
+  }
+  .folio-nav a { color: var(--fg); text-decoration: none; transition: opacity 0.2s; }
+  .folio-nav a:hover { opacity: 0.55; }
+  .folio-nav .num { color: var(--muted); font-size: 0.72rem; display: block; }
+  .folio-nav .copy { color: var(--muted); }
+
+  .folio-foot {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: clamp(1rem, 4vw, 3rem);
+    margin-top: clamp(2rem, 6vw, 5rem);
+  }
+  .folio-foot .blurb {
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    line-height: 1.55;
+    text-transform: uppercase;
+    text-align: center;
+    max-width: 26ch;
+    margin: 0 auto;
+  }
+  .folio-illus { width: clamp(80px, 12vh, 160px); height: auto; color: var(--fg); }
+  .folio-caption { text-align: center; font-size: 0.82rem; color: var(--cap); margin-top: clamp(0.5rem, 1.5vh, 1.2rem); }
+
+  /* ── 낮/밤 전환 토글 ── */
+  .folio-theme {
+    position: absolute;
+    bottom: clamp(0.9rem, 3vh, 1.6rem);
+    right: clamp(1.2rem, 4vw, 3.2rem);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    background: transparent;
+    color: var(--fg);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 5;
+    transition: opacity 0.2s ease, border-color 0.3s ease, color 0.3s ease;
+  }
+  .folio-theme:hover { opacity: 0.6; }
+  .folio-theme svg { width: 18px; height: 18px; }
+  .folio-theme .icon-sun { display: none; }
+  [data-theme="dark"] .folio-theme .icon-sun { display: block; }
+  [data-theme="dark"] .folio-theme .icon-moon { display: none; }
+
+  /* 화면이 낮을 때: 하단 블록 전체를 눌러 담기 */
+  @media (max-height: 760px) {
+    .folio-foot { margin-top: clamp(0.8rem, 2.5vh, 3rem); }
+    .folio-illus { width: clamp(100px, 14vh, 180px); }
+    .folio-foot .blurb { font-size: 0.72rem; }
+  }
+
+  @media (max-width: 720px) {
+    .folio-top { grid-template-columns: 1fr; gap: 0.6rem; }
+    .folio-top .brand { justify-self: start; }
+    .folio-top .folio-mark { justify-self: start; }
+    .folio-socials { justify-self: start; }
+    .folio-foot { grid-template-columns: 1fr; gap: 0.8rem; }
+    .folio-foot .folio-illus { order: -1; margin: 0 auto; width: clamp(96px, 12vh, 150px); }
+    .folio-foot .blurb { font-size: 0.7rem; max-width: 34ch; }
+  }
+</style>
+
+<div id="folio-app" class="folio-home">
+
+  <div class="folio-top">
+    <div class="brand">
+      <img class="brand-logo" src="{{ '/assets/img/favicon.png' | relative_url }}" alt="" aria-hidden="true" />
+      <span>{{ site.first_name }}<sup>&copy;</sup></span>
+    </div>
+    <svg class="folio-mark" viewBox="0 0 512 512" fill="none" stroke="currentColor" stroke-width="24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M104 104 C180 150 332 150 408 104 C362 180 362 332 408 408 C332 362 180 362 104 408 C150 332 150 180 104 104 Z" />
+    </svg>
+    <ul class="folio-socials">
+      <li><a target="_blank" rel="noopener noreferrer" href="{{ site.data.socials.github.url | default: 'https://github.com/bigeco' }}" aria-label="GitHub (opens in new tab)">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none" /><path fill="currentColor" d="M16.974 2.31c.696-.237 1.69-.62 2.279.032c.4.444.5 1.188.571 1.755c.08.634.099 1.462-.111 2.282C20.516 7.415 21 8.653 21 10c0 2.042-1.106 3.814-2.743 5.042a9.5 9.5 0 0 1-2.592 1.354c.215.491.335 1.033.335 1.604v3a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-.995c-.955.117-1.756.017-2.438-.272c-.711-.302-1.208-.77-1.58-1.218a10 10 0 0 1-.481-.638c-.145-.206-.255-.367-.37-.516c-.234-.302-.363-.385-.447-.413a1 1 0 0 1 .632-1.897c.666.222 1.1.702 1.397 1.087c.15.195.298.409.423.586c.132.188.254.356.382.51c.253.302.506.522.826.657c.314.134.776.22 1.5.12L8 17.978a4 4 0 0 1 .334-1.582a9.5 9.5 0 0 1-2.59-1.354C4.105 13.815 3 12.043 3 10c0-1.346.483-2.583 1.284-3.62c-.21-.82-.192-1.647-.112-2.282c.074-.59.155-1.295.571-1.757c.59-.653 1.584-.268 2.28-.03c.619.21 1.384.544 2.125 1.044A11.4 11.4 0 0 1 12 3.001c.993 0 1.951.124 2.849.355a9 9 0 0 1 2.125-1.046" /></svg>
+      </a></li>
+      <li><a target="_blank" rel="noopener noreferrer" href="{{ site.data.socials.linkedin.url | default: '#' }}" aria-label="LinkedIn (opens in new tab)">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none" /><path fill="currentColor" d="M6.94 5a2 2 0 1 1-4-.002a2 2 0 0 1 4 .002M7 8.48H3V21h4zm6.32 0H9.34V21h3.94v-6.57c0-3.66 4.77-4 4.77 0V21H22v-7.93c0-6.17-7.06-5.94-8.72-2.91z" /></svg>
+      </a></li>
+      <li><a target="_blank" rel="noopener noreferrer" href="{{ site.data.socials.google_scholar.url | default: '#' }}" aria-label="Google Scholar (opens in new tab)">
+        <svg xmlns="http://www.w3.org/2000/svg" width="0.75em" height="1em" viewBox="0 0 384 512"><path d="M0 0h384v512H0z" fill="none" /><path fill="currentColor" d="M343.759 106.662V79.43L363.524 64h-213.89L20.476 176.274h85.656a82 82 0 0 0-.219 6.225c0 20.845 7.22 38.087 21.672 51.861c14.453 13.797 32.252 20.648 53.327 20.648c4.923 0 9.75-.368 14.438-1.024c-2.907 6.5-4.374 12.523-4.374 18.142c0 9.875 4.499 20.43 13.467 31.642c-39.234 2.67-68.061 9.732-86.437 21.163c-10.531 6.5-19 14.704-25.39 24.531c-6.391 9.9-9.578 20.515-9.578 31.962c0 9.648 2.062 18.336 6.219 26.062c4.156 7.726 9.578 14.07 16.312 18.984c6.718 4.968 14.469 9.101 23.219 12.469c8.734 3.344 17.406 5.718 26.061 7.062A167 167 0 0 0 180.555 448c13.469 0 26.953-1.734 40.547-5.187c13.562-3.485 26.28-8.642 38.171-15.493c11.86-6.805 21.515-16.086 28.922-27.718c7.39-11.68 11.094-24.805 11.094-39.336c0-11.016-2.25-21.039-6.75-30.14c-4.468-9.073-9.938-16.542-16.452-22.345c-6.501-5.813-13-11.155-19.516-15.968c-6.5-4.845-12-9.75-16.468-14.813c-4.485-5.046-6.735-10.054-6.735-14.984c0-4.921 1.734-9.672 5.216-14.265c3.455-4.61 7.674-9.048 12.61-13.306c4.937-4.25 9.875-8.968 14.796-14.133c4.922-5.147 9.141-11.827 12.61-20.008c3.485-8.18 5.203-17.445 5.203-27.757c0-13.453-2.547-24.46-7.547-33.314c-.594-1.022-1.218-1.803-1.875-3.022l56.907-46.672v17.119c-7.393.93-6.624 5.345-6.624 10.635V245.96c0 5.958 4.875 10.834 10.834 10.834h3.989c5.958 0 10.833-4.875 10.833-10.834V117.293c0-5.277.778-9.688-6.561-10.63m-107.36 222.48c1.14.75 3.704 2.78 7.718 6.038c4.05 3.243 6.797 5.695 8.266 7.414a444 444 0 0 1 6.376 7.547c2.813 3.375 4.718 6.304 5.718 8.734q1.5 3.717 3.047 8.946a38.3 38.3 0 0 1 1.485 10.562c0 17.048-6.564 29.68-19.656 37.859c-13.125 8.18-28.767 12.274-46.938 12.274c-9.187 0-18.203-1.093-27.063-3.196c-8.843-2.116-17.311-5.336-25.39-9.601c-8.078-4.258-14.577-10.204-19.5-17.797c-4.938-7.64-7.407-16.415-7.407-26.25c0-10.32 2.797-19.29 8.422-26.906c5.594-7.625 12.938-13.391 22.032-17.315c9.063-3.946 18.25-6.742 27.562-8.398a158 158 0 0 1 28.438-2.555c4.47 0 7.936.25 10.405.696c.455.219 3.032 2.07 7.735 5.563c4.704 3.462 7.625 5.595 8.75 6.384zm-3.359-100.579c-7.406 8.86-17.734 13.288-30.953 13.288c-11.86 0-22.298-4.764-31.266-14.312c-9-9.523-15.422-20.328-19.344-32.43c-3.937-12.109-5.906-23.984-5.906-35.648q.002-20.54 10.781-34.976c7.187-9.65 17.5-14.485 30.938-14.485c11.875 0 22.374 5.038 31.437 15.157c9.094 10.085 15.61 21.413 19.517 33.968c3.922 12.54 5.873 24.53 5.873 35.984c0 13.446-3.702 24.61-11.076 33.454z" /></svg>
+      </a></li>
+      <li><a target="_blank" rel="noopener noreferrer" href="{{ site.data.socials.youtube.url | default: '#' }}" aria-label="YouTube (opens in new tab)">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none" /><path fill="currentColor" d="m10 15l5.19-3L10 9zm11.56-7.83c.13.47.22 1.1.28 1.9c.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83c-.25.9-.83 1.48-1.73 1.73c-.47.13-1.33.22-2.65.28c-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44c-.9-.25-1.48-.83-1.73-1.73c-.13-.47-.22-1.1-.28-1.9c-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83c.25-.9.83-1.48 1.73-1.73c.47-.13 1.33-.22 2.65-.28c1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44c.9.25 1.48.83 1.73 1.73" /></svg>
+      </a></li>
+    </ul>
+  </div>
+
+  <div class="folio-hero">
+    <span class="script">{{ site.first_name }}</span>
+    <span class="bold">{{ site.last_name }}</span>
+  </div>
+
+  <nav class="folio-nav">
+    <a href="{{ '/about/'        | relative_url }}"><span class="num">01</span>About</a>
+    <a href="{{ '/blog/'         | relative_url }}"><span class="num">02</span>Blog</a>
+    <a href="{{ '/playground/'   | relative_url }}"><span class="num">03</span>Playground</a>
+    <a href="{{ '/publications/' | relative_url }}"><span class="num">04</span>Publications</a>
+    <a href="mailto:{{ site.email }}"><span class="num">05</span>Contact</a>
+    <span class="copy">&copy;{{ 'now' | date: '%Y' }}</span>
+  </nav>
+
+  <div class="folio-foot">
+    <p class="blurb">{{ page.folio.left | default: 'An independent developer based in Seoul, South Korea.' }}</p>
+
+    <img
+      class="folio-illus"
+      src="{{ '/assets/img/mouse_drawing.svg' | relative_url }}"
+      alt=""
+      aria-hidden="true"
+    />
+
+    <p class="blurb">{{ page.folio.right | default: 'Passionate about creating clean, reliable, and elegant digital experiences.' }}</p>
+  </div>
+
+  <p class="folio-caption">{{ page.folio.caption | default: 'Just an ordinary developer. From Korea with love.' }}</p>
+
+  <button id="folio-theme-toggle" class="folio-theme" type="button" aria-label="Toggle dark mode" title="Toggle dark / light">
+    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z" /></svg>
+    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2" /><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4 -1.4M17.7 6.3l1.4 -1.4" /></svg>
+  </button>
+
+</div>
+
+{% comment %} ===== 낮/밤 토글 동작 (al-folio의 setThemeSetting 재사용) ===== {% endcomment %}
+{% raw %}
+<script>
+  (function () {
+    var btn = document.getElementById("folio-theme-toggle");
+    if (!btn) return;
+
+    function currentTheme() {
+      return document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
+    }
+
+    btn.addEventListener("click", function () {
+      var next = currentTheme() === "dark" ? "light" : "dark";
+
+      // al-folio 전역 함수가 있으면 그대로 사용 → 다른 페이지와 완전 동기화
+      if (typeof setThemeSetting === "function") {
+        setThemeSetting(next);
+      } else {
+        // 폴백: 직접 적용
+        try { localStorage.setItem("theme", next); } catch (e) {}
+        document.documentElement.setAttribute("data-theme-setting", next);
+        document.documentElement.setAttribute("data-theme", next);
+      }
+
+      // Liquid Glass 효과에 테마 변경을 알림(다크=효과 제거 / 라이트=새 색으로 재생성)
+      window.dispatchEvent(new Event("folio:themechange"));
+    });
+  })();
+</script>
+{% endraw %}
+
+{% comment %} ===== Liquid Glass 효과 (VFX-JS) — {% endcomment %}{% comment %} raw 로 감싸 Liquid 파싱 방지 ===== {% endcomment %}
+{% raw %}
+<script type="module">
+  // Liquid glass post-effect — original by Amagi (MIT), https://codepen.io/fand/pen/azmPjqd
+  // VFX-JS — https://amagi.dev/vfx-js/
+
+  const PARAMS = {
+    sphereR: 0.12,
+    bubbleCount: 8,
+    bubbleRadiusMin: 0.03,
+    bubbleRadiusMax: 0.07,
+    bubbleSpeed: 0.7,
+    mouseSmoothing: 0.05,
+  };
+
+  // ── 효과를 켤지 판단하는 가드 (성능/접근성/호환성) ──
+  const prefersReduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const isSmall = matchMedia("(max-width: 820px)").matches; // 모바일에선 끔
+  function hasWebGL2() {
+    try { return !!document.createElement("canvas").getContext("webgl2"); }
+    catch (e) { return false; }
+  }
+  const enableGlass = !prefersReduced && !isSmall && hasWebGL2();
+
+  const postEffectShader = `
+    precision highp float;
+    uniform sampler2D src;
+    uniform vec2 resolution;
+    uniform vec2 offset;
+    uniform vec2 mouse;
+    uniform vec2 lag;
+    uniform float time;
+    uniform float clickTime;
+    uniform int clickCount;
+    out vec4 outColor;
+
+    const float SPHERE_R = ${PARAMS.sphereR.toFixed(4)};
+
+    const float DISP = 0.025;
+    const int   DISP_STEPS = 12;
+    const float DISP_LO = 0.0;
+    const float DISP_HI = 1.0;
+
+    const float SCATTER = 0.03;
+
+    const int N_BUBBLES = ${PARAMS.bubbleCount};
+    const float BUBBLE_SMOOTH = 0.025;
+    uniform float bubbleData[${PARAMS.bubbleCount * 4}];
+
+    const vec3 ABSORB = vec3(2.0, 1.2, 1.0) * 3.;
+
+    float smin(float a, float b, float k) {
+      float h = clamp(0.5 + 0.5 * (b - a) / k, 0.0, 1.0);
+      return mix(b, a, h) - k * h * (1.0 - h);
+    }
+
+    vec2 hash22(vec2 p) {
+      vec3 p3 = fract(vec3(p.xyx) * vec3(0.1031, 0.1030, 0.0973));
+      p3 += dot(p3, p3.yzx + 33.33);
+      return fract((p3.xx + p3.yz) * p3.zy) * 2.0 - 1.0;
+    }
+
+    mat2 rot(float t) {
+      float c = cos(t), s = sin(t);
+      return mat2(c, -s, s, c);
+    }
+
+    float sdSphere(vec3 p, float r) { return length(p) - r; }
+
+    float sdBox(vec3 p, vec3 b, float r) {
+      vec3 q = abs(p) - b + r;
+      return length(max(q,0.0)) + min(max(q.x,max(q.y,q.z)),0.0) - r;
+    }
+
+    float sdRing(vec3 p, vec2 r) {
+      float s = length(p.xy) - r.x;
+      return length(vec2(s, p.z)) - r.y;
+    }
+
+    float map(vec3 p, vec3 c) {
+      vec3 q = p - c;
+
+      float tt = clickTime * 5.0;
+      float bounce = exp(-tt) * sin(tt) * 5. + (1. - exp(-tt));
+      float s = bounce * 0.5 + 0.5;
+      q /= s;
+
+      q.xz *= rot(exp(-clickTime*3.0) * 8.);
+
+      vec3 sp = q;
+      sp.y += sin(sp.z * 29. + time * 6.5) * 0.01;
+      sp.z += sin(sp.x * 23. + sp.y * 11. + time * 7.) * 0.01;
+      sp.xy *= rot(time*1.3);
+      sp.xz *= rot(time*1.1);
+
+      float d ;
+      int objType = clickCount % 3;
+      if (objType == 0) {
+        d = sdSphere(sp, SPHERE_R);
+      } else if (objType == 1) {
+        d = sdBox(sp, vec3(SPHERE_R*0.8), 0.01);
+      } else {
+        d = sdRing(sp, vec2(SPHERE_R*1.1, 0.015));
+      }
+
+      for (int i = 0; i < N_BUBBLES; i++) {
+        int b = i * 4;
+        vec3 bPos = vec3(bubbleData[b], bubbleData[b+1], bubbleData[b+2]);
+        float r = bubbleData[b+3];
+        d = smin(d, sdSphere(q - bPos, max(r, 0.001)), BUBBLE_SMOOTH);
+      }
+
+      return d * s;
+    }
+
+    vec3 calcNormal(vec3 p, vec3 c) {
+      vec2 e = vec2(0.001, 0.0);
+      return normalize(vec3(
+        map(p + e.xyy, c) - map(p - e.xyy, c),
+        map(p + e.yxy, c) - map(p - e.yxy, c),
+        map(p + e.yyx, c) - map(p - e.yyx, c)
+      ));
+    }
+
+    vec3 spectrum(float x) {
+      return clamp(vec3(
+        1.5 - abs(4.0 * x - 1.0),
+        1.5 - abs(4.0 * x - 2.0),
+        1.5 - abs(4.0 * x - 3.0)
+      ), 0.0, 1.0);
+    }
+
+    vec4 getSrc(vec2 uv) {
+      vec4 c = texture(src, uv);
+      return mix(vec4(1), c, c.a);
+    }
+
+    void main() {
+      vec2 uv = (gl_FragCoord.xy - offset) / resolution;
+      float aspect = resolution.y / resolution.x;
+
+      vec2 p = (uv - 0.5) * vec2(1.0, aspect);
+      vec2 mp = ((mouse + lag) / resolution - 0.5) * vec2(1.0, aspect);
+
+      vec3 ro = vec3(0.0, 0.0, -2.0);
+      float focal = 2.0;
+      vec3 rd = normalize(vec3(p, focal));
+
+      vec3 c = vec3(mp, 0.0);
+
+      vec3 firstN = vec3(0.0);
+      vec3 lastN = vec3(0.0);
+      int hitCount = 0;
+
+      float thickness = 0.0;
+      float tEntry = 0.0;
+      float t = 0.0;
+      bool inside = false;
+      for (int i = 0; i < 50; i++) {
+        if (t > 10.0) break;
+
+        vec3 pos = ro + rd * t;
+        float d = map(pos, c);
+
+        float step = inside ? -d : d;
+        if (step < 3e-4) {
+          vec3 n = calcNormal(pos, c);
+          if (hitCount == 0) firstN = n;
+          lastN = n;
+          if (!inside) {
+            tEntry = t;
+          } else {
+            thickness += t - tEntry;
+          }
+
+          hitCount++;
+          if (hitCount >= 4) { break; }
+
+          inside = !inside;
+          t += 0.01;
+        } else {
+          t += step;
+        }
+      }
+
+      if (hitCount > 0) {
+        vec2 baseDisp = -(firstN.xy + lastN.xy) * 0.5 * DISP;
+
+        float NdotR = max(dot(firstN, -rd), 0.0);
+        float scatter = pow((1.0 - NdotR), 2.0) * SCATTER;
+
+        vec3 acc = vec3(0.0);
+        vec3 wsum = vec3(0.0);
+        for (int i = 0; i < DISP_STEPS; i++) {
+          float wl = float(i) / float(DISP_STEPS - 1);
+          float k = mix(DISP_LO, DISP_HI, wl) * (1.3 + float(hitCount) * 0.2);
+          vec2 h = hash22(uv * 1000.0 + float(i) * 7.13 + time) * scatter;
+          vec3 w = spectrum(wl);
+          acc += getSrc(uv + baseDisp * k + h).rgb * w;
+          wsum += w;
+        }
+        vec3 col = acc / wsum * 0.99;
+        col -= float(hitCount) * 0.05;
+
+        col += 0.1;
+
+        float fres = pow(1.0 - NdotR, 5.0);
+        col *= 1. + fres;
+
+        float f2 = 1. - pow(NdotR, 3.0);
+        col *= mix(vec3(1), exp(-ABSORB * thickness), f2);
+        col *= 1. + f2;
+
+        vec3 ld = normalize(vec3(0.5, 0.9, -0.3));
+        float spec = pow(max(dot(reflect(-ld, firstN), -rd), 0.0), 200.0);
+        col += spec * 30.;
+
+        ld = normalize(vec3(-0.9, 0.4, -0.3));
+        spec = pow(max(dot(reflect(-ld, firstN), -rd), 0.0), 300.0);
+        col += spec * 3.;
+
+        ld = normalize(vec3(-0.1, -0.9, -0.1));
+        spec = pow(max(dot(reflect(-ld, firstN), -rd), 0.0), 30.0);
+        col += spec * 0.5;
+
+        col = min(col, 1.);
+        col = 1. - abs(col + fres * .5 - 1.);
+
+        outColor = vec4(col, 1.0);
+      } else {
+        outColor = getSrc(uv);
+      }
+    }
+  `;
+
+  // 유리 효과를 다크모드에서도 유지합니다. (라이트에서만 쓰고 싶다면 false 로 바꾸세요)
+  const GLASS_IN_DARK = true;
+  const isDark = () => document.documentElement.getAttribute("data-theme") === "dark";
+
+  if (enableGlass) {
+    window.addEventListener("load", async () => {
+      let VFX;
+      try {
+        ({ VFX } = await import("https://esm.sh/@vfx-js/core@0.11.1"));
+      } catch (e) {
+        console.warn("[folio] VFX-JS 로드 실패, 일반 화면으로 표시합니다.", e);
+        return;
+      }
+
+      // 큰 필기체 폰트가 텍스처에 담기도록 폰트 로딩을 기다림
+      if (document.fonts && document.fonts.ready) {
+        try { await document.fonts.ready; } catch (e) {}
+      }
+
+      const app = document.getElementById("folio-app");
+      if (!app) return;
+
+      const N = PARAMS.bubbleCount;
+      const fract = (x) => x - Math.floor(x);
+      const rot2d = (x, y, t) => {
+        const c = Math.cos(t), s = Math.sin(t);
+        return [x * c - y * s, x * s + y * c];
+      };
+
+      const p0 = { x: 0, y: 0 };
+      const p1 = { x: 0, y: 0 };
+      const p2 = { x: 0, y: 0 };
+      let hasMouse = false;
+      let centerBlend = 1.0;
+      window.addEventListener("pointermove", (e) => {
+        p0.x = e.clientX;
+        p0.y = window.innerHeight - e.clientY;
+        hasMouse = true;
+      });
+
+      let lastClickTime = performance.now() / 1000;
+      let clickCount = 0;
+      window.addEventListener("pointerdown", () => {
+        lastClickTime = performance.now() / 1000;
+        clickCount++;
+      });
+
+      const bubbles = new Float32Array(N * 4);
+      const t0 = performance.now() / 1000;
+
+      function tick() {
+        const time = performance.now() / 1000 - t0;
+        const sm = PARAMS.mouseSmoothing;
+        p1.x += (p0.x - p1.x) * sm;
+        p1.y += (p0.y - p1.y) * sm;
+        p2.x += (p1.x - p2.x) * sm;
+        p2.y += (p1.y - p2.y) * sm;
+
+        if (hasMouse) { centerBlend *= 0.95; }
+
+        for (let i = 0; i < N; i++) {
+          const life = fract(time * PARAMS.bubbleSpeed + i / N);
+          const orbitR = PARAMS.sphereR * (0.3 + life * 0.8);
+          const orbitAngle = time * (0.8 + fract(i * 0.618) * 0.7) + i * 1.256;
+
+          let bx = Math.cos(orbitAngle) * orbitR;
+          let by = 0;
+          let bz = Math.sin(orbitAngle) * orbitR;
+
+          [bx, by] = rot2d(bx, by, i * 2.3);
+          [by, bz] = rot2d(by, bz, i * 1.8);
+
+          by += life * 0.1;
+          bx += Math.sin(time * 2.7 + i * 4.1) * 0.008 * life;
+          bz += Math.cos(time * 3.1 + i * 3.7) * 0.008 * life;
+
+          const w = window.innerWidth, h = window.innerHeight;
+          bx += ((p2.x - p1.x) / w) * (h / w);
+          by += (p2.y - p1.y) / h;
+
+          const range = PARAMS.bubbleRadiusMax - PARAMS.bubbleRadiusMin;
+          const maxR = PARAMS.bubbleRadiusMin + range * fract(i * 0.618);
+
+          const j = i * 4;
+          bubbles[j] = bx;
+          bubbles[j + 1] = by;
+          bubbles[j + 2] = bz;
+          bubbles[j + 3] = maxR * Math.sin(life * Math.PI);
+        }
+        requestAnimationFrame(tick);
+      }
+      tick();
+
+      // ── 유리 인스턴스 생성/파괴 ──
+      let vfx = null;
+
+      async function buildGlass() {
+        if (vfx) return;
+        const inst = new VFX({
+          postEffect: {
+            shader: postEffectShader,
+            uniforms: {
+              lag: () => {
+                const lx = (p1.x - p0.x) * devicePixelRatio;
+                const ly = (p1.y - p0.y) * devicePixelRatio;
+                const cx = (window.innerWidth / 2) * devicePixelRatio * centerBlend;
+                const cy = (window.innerHeight / 2) * devicePixelRatio * centerBlend;
+                return [cx + lx, cy + ly];
+              },
+              clickTime: () => performance.now() / 1000 - lastClickTime,
+              clickCount: () => clickCount,
+              bubbleData: () => bubbles,
+            },
+          },
+        });
+        try {
+          await inst.addHTML(app, { shader: "none" });
+          inst.play();
+          vfx = inst;
+        } catch (e) {
+          console.warn("[folio] 유리 효과 생성 실패", e);
+          try { inst.destroy(); } catch (_) {}
+        }
+      }
+
+      function teardownGlass() {
+        if (!vfx) return;
+        try { vfx.destroy(); } catch (e) {}  // 캔버스 제거 + 원본 DOM 복원
+        vfx = null;
+        // 혹시 원본 요소가 숨겨진 채 남지 않도록 강제 복원
+        app.style.opacity = "";
+        app.style.visibility = "";
+      }
+
+      // 현재 테마에 맞춰 유리 표시 여부 결정
+      function applyGlassForTheme() {
+        if (GLASS_IN_DARK || !isDark()) {
+          buildGlass();          // 라이트: 유리 켜기 (매번 새 색으로 캡처)
+        } else {
+          teardownGlass();       // 다크: 유리 제거 → 순수한 색 반전만 표시(진짜 다크모드)
+        }
+      }
+
+      applyGlassForTheme();
+
+      // 낮/밤 전환 시: 캔버스는 그대로 두고 '새 색으로 다시 캡처'만 → 크기 깜빡임 없음
+      let rebuildTimer = null;
+      window.addEventListener("folio:themechange", () => {
+        const shouldShow = GLASS_IN_DARK || !isDark();
+        if (!shouldShow) { teardownGlass(); return; } // 다크에서 유리 끄는 설정일 때만
+        if (!vfx) { buildGlass(); return; }           // 유리가 없던 상태면 새로 생성
+
+        // 색이 즉시 확정되므로(전환 애니메이션 제거됨) 다음 프레임에 제자리 재캡처
+        requestAnimationFrame(() => {
+          try {
+            vfx.update(app); // 캔버스를 유지한 채 새 색으로 텍스처만 갱신
+          } catch (e) {
+            // 드물게 update 미지원 시 폴백: 재생성
+            teardownGlass();
+            clearTimeout(rebuildTimer);
+            rebuildTimer = setTimeout(buildGlass, 60);
+          }
+        });
+      });
+
+      // 소셜 아이콘 호버 시: 유리 텍스처를 갱신해 '색 진해짐'이 유리 너머로도 보이게
+      const socials = app.querySelector(".folio-socials");
+      if (socials) {
+        const reglass = () => {
+          try { vfx && vfx.update(app); } catch (e) {}
+          // 0.2s 호버 트랜지션이 끝난 최종 상태도 캡처
+          setTimeout(() => { try { vfx && vfx.update(app); } catch (e) {} }, 240);
+        };
+        socials.addEventListener("pointerover", reglass);
+        socials.addEventListener("pointerout", reglass);
+        socials.addEventListener("focusin", reglass);
+        socials.addEventListener("focusout", reglass);
+      }
+    });
+  }
+</script>
+{% endraw %}
