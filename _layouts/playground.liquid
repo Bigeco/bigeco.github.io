@@ -1,0 +1,204 @@
+---
+layout: default
+---
+
+{% comment %} ===== Playground — "Selected Works" 모자이크 =====
+  Design adapted from "Agency Layout" by Freask'O (MIT)
+  https://codepen.io/fchaussin/pen/PwbPEVV
+{% endcomment %}
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" />
+
+<style>
+  /* 이 스타일은 playground 레이아웃(=이 페이지)에서만 출력됩니다. */
+  #navbar, footer, .post .post-header { display: none !important; }
+  html, body { margin: 0 !important; padding: 0 !important; }
+  .container.mt-5, .container[role="main"] { margin: 0 !important; padding: 0 !important; max-width: 100% !important; }
+
+  .pg {
+    --c-bg: oklch(96% 0.005 90);
+    --c-fg: oklch(15% 0 0);
+    --c-fg-soft: oklch(15% 0 0 / 0.6);
+    --c-line: oklch(15% 0 0);
+    --c-accent: oklch(88% 0.22 125);
+    --ff-display: "Archivo Black", ui-sans-serif, system-ui, sans-serif;
+    --ff-body: "Archivo", ui-sans-serif, system-ui, sans-serif;
+    --ff-mono: "JetBrains Mono", ui-monospace, monospace;
+    --s-2: 0.5rem; --s-3: 0.75rem; --s-4: 1rem; --s-5: 1.5rem; --s-7: 3rem;
+    --bw: 1px;
+    --pad-x: var(--s-4);
+    color: var(--c-fg);
+    background: var(--c-bg);
+    font-family: var(--ff-body);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+  @media (min-width: 48rem) { .pg { --pad-x: var(--s-5); } }
+  @media (min-width: 80rem) { .pg { --pad-x: 2rem; } }
+  .pg *, .pg *::before, .pg *::after { box-sizing: border-box; }
+  .pg a { color: inherit; text-decoration: none; }
+  .pg ::selection { background: var(--c-accent); color: var(--c-fg); }
+
+  /* 상단 미니 바 (홈으로 돌아가기 + 네비 + 시계) */
+  .pg-topbar {
+    position: fixed; inset: 0 0 auto 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between; gap: var(--s-4);
+    padding: var(--s-4) var(--pad-x);
+    color: #fff; mix-blend-mode: difference; pointer-events: none;
+  }
+  .pg-topbar > * { pointer-events: auto; }
+  .pg-topbar__brand { font-family: var(--ff-display); font-size: 1.125rem; letter-spacing: -0.02em; text-transform: uppercase; }
+  .pg-topbar__brand::after { content: " ●"; color: var(--c-accent); }
+  .pg-topbar__nav { display: none; gap: var(--s-5); }
+  @media (min-width: 48rem) { .pg-topbar__nav { display: flex; } }
+  .pg-topbar__nav a { font-family: var(--ff-mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .pg-topbar__nav a::before { content: "↳ "; opacity: 0.5; }
+  .pg-topbar__nav a:hover { color: var(--c-accent); }
+  .pg-topbar__meta { font-family: var(--ff-mono); font-size: 0.75rem; letter-spacing: 0.05em; }
+
+  /* 섹션 헤더 */
+  .pg .section-head {
+    display: grid; grid-template-columns: 1fr; gap: var(--s-3);
+    padding: calc(var(--s-7) + 2.5rem) var(--pad-x) var(--s-5);
+    border-bottom: var(--bw) solid var(--c-line);
+  }
+  @media (min-width: 48rem) { .pg .section-head { grid-template-columns: auto 1fr auto; align-items: end; } }
+  .pg .section-head__num, .pg .section-head__count {
+    font-family: var(--ff-mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.5;
+  }
+  .pg .section-head__title {
+    font-family: var(--ff-display); font-size: clamp(2rem, 6vw, 4.5rem); line-height: 0.9;
+    letter-spacing: -0.03em; text-transform: uppercase; margin: 0;
+  }
+
+  /* 모자이크 */
+  .mosaic {
+    display: grid; grid-template-columns: repeat(var(--mosaic-cols, 6), 1fr);
+    gap: var(--bw); background: var(--c-line); border-bottom: var(--bw) solid var(--c-line);
+  }
+  .tile { position: relative; aspect-ratio: 1; background: var(--c-bg); overflow: hidden; cursor: pointer; display: none; }
+  .tile:nth-child(-n + 48) { display: block; }
+  @media (min-width: 48rem) { .mosaic { --mosaic-cols: 8; } .tile:nth-child(-n + 64) { display: block; } }
+  @media (min-width: 64rem) { .mosaic { --mosaic-cols: 10; } .tile:nth-child(-n + 80) { display: block; } }
+  @media (min-width: 80rem) { .mosaic { --mosaic-cols: 12; } .tile:nth-child(-n + 96) { display: block; } }
+
+  .tile img { width: 100%; height: 100%; object-fit: cover; transition: transform 600ms cubic-bezier(0.2,0.8,0.2,1), filter 300ms; }
+  .tile:hover img { transform: scale(1.08); filter: contrast(1.1) saturate(0.9); }
+  .tile__label {
+    position: absolute; inset: auto 0 0 0; padding: var(--s-2);
+    font-family: var(--ff-mono); font-size: 0.625rem; text-transform: uppercase; letter-spacing: 0.05em;
+    color: var(--c-bg); background: linear-gradient(to top, oklch(15% 0 0 / 0.85), transparent);
+    opacity: 0; transition: opacity 200ms; display: flex; justify-content: space-between; pointer-events: none;
+  }
+  .tile:hover .tile__label, .tile:focus-visible .tile__label { opacity: 1; }
+  @media (max-width: 47.99rem) { .tile__label { display: none; } }
+
+  /* 스크롤 진입 애니메이션 */
+  .tile { opacity: 0; transform: translateY(12px); transition: opacity 500ms ease, transform 500ms ease; transition-delay: var(--reveal-delay, 0ms); }
+  .tile[data-visible="true"] { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) { .tile { transition: none; opacity: 1; transform: none; } }
+
+  .pg-foot {
+    padding: var(--s-7) var(--pad-x);
+    font-family: var(--ff-mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em;
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: var(--s-4); opacity: 0.7;
+  }
+</style>
+
+<div class="pg">
+  <header class="pg-topbar">
+    <a class="pg-topbar__brand" href="{{ '/' | relative_url }}">{{ site.first_name }}.ai</a>
+    <nav class="pg-topbar__nav" aria-label="Primary">
+      <a href="{{ '/about/' | relative_url }}">About</a>
+      <a href="{{ '/blog/' | relative_url }}">Blog</a>
+      <a href="{{ '/publications/' | relative_url }}">Publications</a>
+      <a href="{{ '/' | relative_url }}">Home</a>
+    </nav>
+    <div class="pg-topbar__meta" id="pg-clock">— : —</div>
+  </header>
+
+  <section id="index">
+    <div class="section-head">
+      <div class="section-head__num">[04] / Playground</div>
+      <h2 class="section-head__title">Selected Works <span style="color:var(--c-fg-soft)">2019–26</span></h2>
+      <div class="section-head__count" id="pg-count">— Items</div>
+    </div>
+    <div class="mosaic" id="mosaic" role="list"></div>
+  </section>
+
+  <footer class="pg-foot">
+    <span>{{ site.first_name }} {{ site.last_name }} — Playground</span>
+    <span>From Korea with love</span>
+  </footer>
+</div>
+
+{% raw %}
+<script>
+  (function () {
+    const TILE_COUNT = 96; // 화면 크기에 따라 최대 96개까지 표시 (원하면 조정)
+    const IDS = [
+      "1609605348579-3123e3d40eb8","1533226458520-6f71cffeaa6a","1617050318658-a9a3175e34cb",
+      "1461958508236-9a742665a0d5","1596299786007-9974099be52b","1581080247486-57989c1f14ab",
+      "1611532736597-de2d4265fba3","1513909894411-7d7e04c28ecd","1603204254626-d0de8eb24cf1",
+      "1619632973808-4acf8041df42","1505356822725-08ad25f3ffe4","1566978862346-73282aa378a4",
+      "1617575521317-d2974f3b56d2","1610454059909-f9a5a6eb4e58","1504625709867-b4e45e3bb9dd",
+      "1446771326090-d910bfaf00f6","1536924491042-b0466800ce46","1625390711106-3728815ebcd9",
+      "1595658511703-2cad160de181","1591280122880-eec70c6a5810","1600730424902-a3a3be6af112",
+      "1522743791393-522312deeebf","1609670530579-fe311b3630cc","1469474968028-56623f02e42e"
+    ];
+    const YEARS = [2026, 2025, 2025, 2024, 2024, 2023, 2023, 2022, 2021, 2019];
+    const url = (id) => `https://images.unsplash.com/photo-${id}?w=600&h=600&fit=crop&q=70&auto=format`;
+
+    const mosaic = document.getElementById("mosaic");
+    const count = document.getElementById("pg-count");
+    if (!mosaic) return;
+    count && (count.textContent = TILE_COUNT + " Items");
+
+    const tiles = [];
+    for (let i = 0; i < TILE_COUNT; i++) {
+      const a = document.createElement("a");
+      a.className = "tile";
+      a.href = "#";
+      a.setAttribute("role", "listitem");
+      const num = String(i + 1).padStart(3, "0");
+      a.innerHTML =
+        '<img src="' + url(IDS[i % IDS.length]) + '" alt="Work ' + num + '" loading="' + (i < 12 ? "eager" : "lazy") + '" decoding="async">' +
+        '<div class="tile__label"><span>[' + num + ']</span><span>' + YEARS[i % YEARS.length] + '</span></div>';
+      a.addEventListener("click", (e) => e.preventDefault());
+      mosaic.appendChild(a);
+      tiles.push(a);
+    }
+
+    // 스크롤 진입 시 웨이브 등장
+    const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) {
+      tiles.forEach((t) => (t.dataset.visible = "true"));
+    } else {
+      let waveStart = performance.now(), waveCount = 0;
+      const io = new IntersectionObserver((entries) => {
+        const now = performance.now();
+        if (now - waveStart > 400) { waveStart = now; waveCount = 0; }
+        entries.forEach((en) => {
+          if (en.isIntersecting) {
+            en.target.style.setProperty("--reveal-delay", Math.min(waveCount * 35, 600) + "ms");
+            en.target.dataset.visible = "true";
+            waveCount++;
+            io.unobserve(en.target);
+          }
+        });
+      }, { rootMargin: "0px 0px -10% 0px", threshold: 0.05 });
+      tiles.forEach((t) => io.observe(t));
+    }
+
+    // 상단 시계 (서울)
+    const clock = document.getElementById("pg-clock");
+    if (clock) {
+      const tick = () => {
+        const t = new Date().toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit", second: "2-digit", timeZone: "Asia/Seoul" });
+        clock.textContent = "SEL " + t;
+      };
+      tick(); setInterval(tick, 1000);
+    }
+  })();
+</script>
+{% endraw %}

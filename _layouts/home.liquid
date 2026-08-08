@@ -1,38 +1,66 @@
 ---
 layout: default
 ---
-
-{% comment %} ===== Folio home + Liquid Glass (VFX-JS) =====
+{% comment %}
+  ===== Folio home + Liquid Glass (VFX-JS) =====
   Liquid glass post-effect by Amagi (MIT) — https://codepen.io/fand/pen/azmPjqd
   VFX-JS — https://amagi.dev/vfx-js/
 {% endcomment %}
 
-<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet" />
+<link
+  href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap"
+  rel="stylesheet"
+>
 
 <style>
-  /* 이 <style> 블록은 home 레이아웃(=홈 페이지)에서만 출력되므로,
+  /* 자체 호스팅 Google Sans (assets/fonts/에 woff2 배치 필요)
+     — 유리 캡처(dom-to-canvas)에서도 웹폰트가 누락되지 않도록 same-origin 으로 제공 */
+  @font-face {
+    font-family: "Google Sans";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("{{ '/assets/fonts/GoogleSans-Regular.woff2' | relative_url }}") format("woff2");
+  }
+  @font-face {
+    font-family: "Google Sans";
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url("{{ '/assets/fonts/GoogleSans-Medium.woff2' | relative_url }}") format("woff2");
+  }
+  @font-face {
+    font-family: "Google Sans";
+    font-style: normal;
+    font-weight: 600 700;
+    font-display: swap;
+    src: url("{{ '/assets/fonts/GoogleSans-Bold.woff2' | relative_url }}") format("woff2");
+  }
+
+  /* 이 &lt;style&gt; 블록은 home 레이아웃(=홈 페이지)에서만 출력되므로,
      아래 규칙들은 :has() 없이도 홈에만 적용됩니다. (구형 브라우저 호환) */
 
-  /* al-folio 기본 네비바 / 푸터 / 헤더 숨기기 */
+  /* al-folio 기본 네비바 / 푸터 / 헤더 / 스크롤 진행바 숨기기 */
   #navbar,
   footer,
+  #progress,
+  .progress-container,
+  #progressbar,
+  #myBar,
   .post .post-header { display: none !important; }
 
-  /* 스크롤 완전 차단 + 정확히 한 화면 */
-  html,
-  body {
-    height: 100%;
+  /* 스크롤 허용(앵커로 섹션 이동) + al-folio 래퍼 여백 제거 */
+  html { scroll-behavior: smooth; }
+  html, body {
     margin: 0 !important;
     padding: 0 !important;
-    overflow: hidden !important;
+    overflow-x: hidden !important;
   }
   .container.mt-5,
   .container[role="main"] {
     margin: 0 !important;
     padding: 0 !important;
     max-width: 100% !important;
-    height: 100dvh;
-    overflow: hidden;
   }
 
   .folio-home {
@@ -40,17 +68,17 @@ layout: default
     --fg: rgb(50, 50, 50);
     --muted: #9a9a96;
     --line: #cfcfcb;
-    --bg: #ececea;
+    --bg: oklch(96% 0.005 90);
     --cap: #4a4a48;
     background: var(--bg);
     color: var(--fg);
-    font-family: "Google Sans", "Inter", system-ui, -apple-system, sans-serif;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     font-optical-sizing: auto;
     font-variation-settings: "GRAD" 0;
     position: relative;    /* 토글 버튼의 기준 */
-    height: 100vh;         /* dvh 미지원 브라우저 폴백 */
-    height: 100dvh;        /* 모바일 주소창 변화까지 반영한 실제 화면 높이 */
-    overflow: hidden;      /* 넘치는 부분은 잘라 스크롤 방지 */
+    min-height: 100vh;     /* 히어로는 첫 화면을 채움(dvh 폴백) */
+    min-height: 100dvh;
+    overflow: hidden;      /* 히어로 내부만 잘림(페이지 전체는 스크롤) */
     padding: clamp(1rem, 2.5vh, 2.2rem) 24px clamp(1rem, 2.5vh, 2.4rem);
     box-sizing: border-box;
     display: flex;
@@ -146,12 +174,13 @@ layout: default
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-wrap: wrap;
-    gap: 0.2em;
   }
-  /* min(가로폭, 화면높이) 로 상한을 걸어 낮은 화면에서도 글자가 넘치지 않게 */
+  .folio-hero .hero-name {
+    /* 단어 사이 공백도 이 크기로 렌더 → 유리 on/off 상관없이 동일한 여백 */
+    font-size: clamp(2.75rem, min(16vw, 20vh), 15rem);
+  }
   .folio-hero .script {
-    font-weight: 500;                 /* Google Sans (folio-home에서 상속), 얇게 */
+    font-weight: 500;                 /* 시스템 폰트 (folio-home에서 상속), 얇게 */
     letter-spacing: -0.02em;
     font-size: clamp(2.75rem, min(16vw, 20vh), 15rem);
     color: var(--fg);                 /* 전역 span color 덮어쓰기 + 다크모드 전환 */
@@ -207,27 +236,78 @@ layout: default
 
   /* ── 낮/밤 전환 토글 ── */
   .folio-theme {
-    position: absolute;
-    bottom: clamp(0.9rem, 3vh, 1.6rem);
-    right: clamp(1.2rem, 4vw, 3.2rem);
-    width: 40px;
-    height: 40px;
+    position: fixed;                 /* 스크롤해도 화면에 고정 */
+    bottom: 1.4rem;
+    right: 1.4rem;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
-    border: 1px solid var(--line);
-    background: transparent;
-    color: var(--fg);
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: #ffffff;             /* 어떤 배경 위에서도 보이도록 자체 배경 */
+    color: #171717;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.18);
     display: inline-flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    z-index: 5;
-    transition: opacity 0.2s ease, border-color 0.3s ease, color 0.3s ease;
+    z-index: 9999;
+    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, transform 0.15s ease;
   }
-  .folio-theme:hover { opacity: 0.6; }
+  [data-theme="dark"] .folio-theme {
+    background: #1a1a1a;
+    color: #f4f4f4;
+    border-color: rgba(255, 255, 255, 0.16);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+  }
+  .folio-theme:hover { transform: translateY(-1px); }
+  .folio-theme:active { transform: translateY(0); }
   .folio-theme svg { width: 18px; height: 18px; }
   .folio-theme .icon-sun { display: none; }
   [data-theme="dark"] .folio-theme .icon-sun { display: block; }
   [data-theme="dark"] .folio-theme .icon-moon { display: none; }
+
+  /* ── 유리 on/off 버튼 (낮밤 버튼 위) ── */
+  .folio-glass {
+    position: fixed;
+    bottom: calc(1.4rem + 52px);
+    right: 1.4rem;
+    width: 44px; height: 44px; border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: #ffffff; color: #171717;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.18);
+    display: inline-flex; align-items: center; justify-content: center;
+    cursor: pointer; z-index: 9999;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.15s ease, opacity 0.2s ease;
+  }
+  [data-theme="dark"] .folio-glass { background: #1a1a1a; color: #f4f4f4; border-color: rgba(255,255,255,0.16); box-shadow: 0 2px 12px rgba(0,0,0,0.5); }
+  .folio-glass:hover { transform: translateY(-1px); }
+  .folio-glass svg { width: 18px; height: 18px; }
+  .folio-glass .folio-glass__off { position: absolute; width: 26px; height: 1.5px; background: currentColor; transform: rotate(-45deg); opacity: 0; transition: opacity 0.2s; }
+  .folio-glass[data-off="true"] { opacity: 0.55; }
+  .folio-glass[data-off="true"] .folio-glass__off { opacity: 1; }
+
+  /* ── 고정 헤더 (Google Labs 스타일: blur + 스크롤 방향에 따라 숨김/표시) ── */
+  .folio-header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 9990;
+    --fg: rgb(50,50,50); --line: #cfcfcb; --muted: #9a9a96;
+    color: var(--fg);
+    font-family: "Google Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  [data-theme="dark"] .folio-header { --fg: #f4f4f4; --line: #262626; --muted: #5c5c5c; }
+  .folio-header[data-hidden="true"] { transform: translateY(-115%); }
+  .folio-header .folio-top {
+    align-items: center;
+    padding: 0.7rem clamp(1rem, 4vw, 2.5rem);
+    background: rgba(245, 244, 239, 0.72);
+    -webkit-backdrop-filter: saturate(180%) blur(16px);
+    backdrop-filter: saturate(180%) blur(16px);
+  }
+  [data-theme="dark"] .folio-header .folio-top {
+    background: rgba(0, 0, 0, 0.55);
+  }
+  /* 헤더가 히어로 최상단을 가리지 않도록 여백 */
+  .folio-home { scroll-margin-top: 4rem; }
 
   /* 화면이 낮을 때: 하단 블록 전체를 눌러 담기 */
   @media (max-height: 760px) {
@@ -245,44 +325,209 @@ layout: default
     .folio-foot .folio-illus { order: -1; margin: 0 auto; width: clamp(96px, 12vh, 150px); }
     .folio-foot .blurb { font-size: 0.7rem; max-width: 34ch; }
   }
+  /* ============================================================
+     아래는 홈에 붙는 스크롤 섹션들: #playground(모자이크), #publications(논문)
+     ============================================================ */
+
+  /* 유리 캔버스(z-index:1) 위에 올려 흰 화면 방지 */
+  #playground, #publications { position: relative; z-index: 2; }
+
+  /* Publications 테마 변수(홈과 동일, 다크 반전) */
+  #publications { --fg: rgb(50,50,50); --muted: #9a9a96; --line: #cfcfcb; --bg: oklch(96% 0.005 90); --cap: #4a4a48; }
+  [data-theme="dark"] #publications { --fg: #f4f4f4; --muted: #5c5c5c; --line: #262626; --bg: #000000; --cap: #8a8a8a; }
+
+  /* ── 공통 섹션 헤더 ── */
+  .sec-head {
+    display: grid; grid-template-columns: 1fr; gap: 0.75rem;
+    padding: 3rem 24px 1.5rem; border-bottom: 1px solid var(--sec-line, #171717);
+  }
+  @media (min-width: 48rem) { .sec-head { grid-template-columns: auto 1fr auto; align-items: end; } }
+  .sec-head__num, .sec-head__count { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.5; }
+  .sec-head__title { font-size: clamp(2rem, 6vw, 4.5rem); line-height: 0.9; letter-spacing: -0.03em; text-transform: uppercase; margin: 0; }
+
+  /* ── PLAYGROUND: 브루탈리스트 모자이크 ── */
+  #playground {
+    --c-bg: oklch(96% 0.005 90); --c-fg: oklch(15% 0 0); --c-fg-soft: oklch(15% 0 0 / 0.6);
+    --c-line: oklch(15% 0 0); --c-accent: oklch(88% 0.22 125);
+    --ff-display: "Archivo Black", ui-sans-serif, system-ui, sans-serif;
+    --ff-mono: "JetBrains Mono", ui-monospace, monospace;
+    background: var(--c-bg); color: var(--c-fg);
+    padding-top: clamp(2rem, 5vw, 4rem); /* Publications과의 간격 */
+  }
+  #playground .sec-head { --sec-line: var(--c-line); }
+  #playground .sec-head__num, #playground .sec-head__count { font-family: var(--ff-mono); }
+  #playground .sec-head__title { font-family: var(--ff-display); }
+
+  /* 다크: Playground 도 검정 배경으로 통일 */
+  [data-theme="dark"] #playground {
+    --c-bg: #000000;
+    --c-fg: #f4f4f4;
+    --c-fg-soft: rgba(244, 244, 244, 0.55);
+    --c-line: #262626;
+  }
+  [data-theme="dark"] .pg-detail { background: #000000; color: #f4f4f4; }
+  [data-theme="dark"] .pg-detail__bar { background: #000000; border-bottom-color: #262626; }
+
+  .mosaic { display: grid; grid-template-columns: repeat(var(--mosaic-cols, 6), 1fr); gap: 1px; background: var(--c-line); border-bottom: 1px solid var(--c-line); }
+  .tile { position: relative; aspect-ratio: 1; background: var(--c-bg); overflow: hidden; cursor: pointer; display: none; opacity: 0; transform: translateY(12px); transition: opacity 500ms ease, transform 500ms ease; transition-delay: var(--reveal-delay, 0ms); }
+  .tile[data-visible="true"] { opacity: 1; transform: none; }
+  .tile:nth-child(-n + 48) { display: block; }
+  @media (min-width: 48rem) { .mosaic { --mosaic-cols: 8; } .tile:nth-child(-n + 64) { display: block; } }
+  @media (min-width: 64rem) { .mosaic { --mosaic-cols: 10; } .tile:nth-child(-n + 80) { display: block; } }
+  @media (min-width: 80rem) { .mosaic { --mosaic-cols: 12; } .tile:nth-child(-n + 96) { display: block; } }
+  .tile img { width: 100%; height: 100%; object-fit: cover; transition: transform 600ms cubic-bezier(0.2,0.8,0.2,1), filter 300ms; }
+  .tile:hover img { transform: scale(1.08); filter: contrast(1.1) saturate(0.9); }
+  .tile__label { position: absolute; inset: auto 0 0 0; padding: 0.5rem; font-family: var(--ff-mono); font-size: 0.625rem; text-transform: uppercase; letter-spacing: 0.05em; color: #f5f5f0; background: linear-gradient(to top, oklch(15% 0 0 / 0.85), transparent); opacity: 0; transition: opacity 200ms; display: flex; justify-content: space-between; pointer-events: none; }
+  .tile:hover .tile__label { opacity: 1; }
+  @media (max-width: 47.99rem) { .tile__label { display: none; } }
+  @media (prefers-reduced-motion: reduce) { .tile { transition: none; opacity: 1; transform: none; } }
+
+  /* ── PLAYGROUND 상세 모달 ── */
+  .pg-detail { position: fixed; inset: 0; z-index: 9998; background: oklch(96% 0.005 90); color: oklch(15% 0 0); font-family: "Archivo", ui-sans-serif, system-ui, sans-serif; overflow-y: auto; opacity: 0; visibility: hidden; transition: opacity 300ms ease; }
+  .pg-detail[data-open="true"] { opacity: 1; visibility: visible; }
+  .pg-detail__bar { position: sticky; top: 0; display: flex; justify-content: space-between; align-items: center; padding: 1rem 24px; font-family: "JetBrains Mono", monospace; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid #171717; background: oklch(96% 0.005 90); }
+  .pg-detail__close { font: inherit; background: none; border: 0; cursor: pointer; text-transform: uppercase; }
+  .pg-detail__close:hover { color: oklch(70% 0.22 35); }
+  .pg-detail__img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; }
+  .pg-detail__body { padding: 2rem 24px 4rem; display: grid; gap: 1.5rem; max-width: 70ch; }
+  .pg-detail__title { font-family: "Archivo Black"; font-size: clamp(1.8rem, 5vw, 3.5rem); line-height: 0.95; letter-spacing: -0.03em; text-transform: uppercase; margin: 0; }
+  .pg-detail__meta { display: flex; flex-wrap: wrap; gap: 1.5rem; font-family: "JetBrains Mono", monospace; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.7; }
+  .pg-detail__brief { font-size: 1.05rem; line-height: 1.55; margin: 0; }
+
+  /* ── PUBLICATIONS: 홈과 동일 시스템 폰트, 논문 아코디언 ── */
+  #publications {
+    background: var(--bg); color: var(--fg);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  #publications .sec-head { --sec-line: var(--line); }
+  #publications .sec-head__num, #publications .sec-head__count { color: var(--muted); }
+  #publications .sec-head__title { font-family: "Archivo Black", ui-sans-serif, system-ui, sans-serif; }
+
+  .pubs-list { list-style: none; margin: 0; padding: 0; }
+  .pub-item { border-bottom: 1px solid var(--line); }
+  .pub-row { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 1rem; padding: 1.4rem 24px; }
+  .pub-venue { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 0.35rem; }
+  .pub-title { font-size: clamp(1rem, 2.2vw, 1.4rem); font-weight: 500; line-height: 1.25; letter-spacing: -0.01em; }
+  .pub-actions { display: flex; align-items: center; gap: 0.5rem; }
+  .pub-btn {
+    font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em;
+    padding: 0.4rem 0.7rem; border: 1px solid var(--line); border-radius: 999px; color: var(--fg);
+    background: transparent; text-decoration: none; white-space: nowrap;
+    transition: background-color 0.2s, border-color 0.2s, opacity 0.2s;
+  }
+  .pub-btn:hover { background-color: color-mix(in srgb, var(--fg) 8%, transparent); border-color: color-mix(in srgb, var(--fg) 35%, var(--line)); }
+  .pub-toggle {
+    width: 2.2rem; height: 2.2rem; flex-shrink: 0; border: 1px solid var(--line); border-radius: 50%;
+    background: transparent; color: var(--fg); cursor: pointer; font-size: 1.1rem; line-height: 1;
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1), background-color 0.2s;
+  }
+  .pub-toggle:hover { background-color: color-mix(in srgb, var(--fg) 8%, transparent); }
+  .pub-item[data-open="true"] .pub-toggle { transform: rotate(45deg); }
+  .pub-panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 400ms cubic-bezier(0.2,0.8,0.2,1); }
+  .pub-item[data-open="true"] .pub-panel { grid-template-rows: 1fr; }
+  .pub-panel__inner { overflow: hidden; min-height: 0; }
+  .pub-abstract { margin: 0; padding: 0 24px 1.6rem; font-size: 0.95rem; line-height: 1.55; color: var(--fg); max-width: 75ch; }
+
+  .sec-foot {
+    padding: 3rem 24px; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em;
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; opacity: 0.7;
+    background: var(--c-bg); color: var(--c-fg); font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    border-top: 1px solid var(--c-line);
+  }
+
+  @media (max-width: 720px) {
+    .pub-row { grid-template-columns: 1fr; }
+    .pub-actions { justify-content: flex-start; }
+  }
 </style>
 
-<div id="folio-app" class="folio-home">
-
+<header class="folio-header" id="folio-header">
   <div class="folio-top">
     <div class="brand">
-      <img class="brand-logo" src="{{ '/assets/img/favicon.png' | relative_url }}" alt="" aria-hidden="true" />
-      <span>{{ site.first_name }}<sup>&copy;</sup></span>
+      <img class="brand-logo" src="{{ '/assets/img/favicon.png' | relative_url }}" alt="" aria-hidden="true">
+      <span>
+        {{- site.first_name -}}
+        <sup>&copy;</sup></span
+      >
     </div>
-    <svg class="folio-mark" viewBox="0 0 512 512" fill="none" stroke="currentColor" stroke-width="24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <svg
+      class="folio-mark"
+      viewBox="0 0 512 512"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="24"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+    >
       <path d="M104 104 C180 150 332 150 408 104 C362 180 362 332 408 408 C332 362 180 362 104 408 C150 332 150 180 104 104 Z" />
     </svg>
     <ul class="folio-socials">
-      <li><a target="_blank" rel="noopener noreferrer" href="{{ site.data.socials.github.url | default: 'https://github.com/bigeco' }}" aria-label="GitHub (opens in new tab)">
-        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none" /><path fill="currentColor" d="M16.974 2.31c.696-.237 1.69-.62 2.279.032c.4.444.5 1.188.571 1.755c.08.634.099 1.462-.111 2.282C20.516 7.415 21 8.653 21 10c0 2.042-1.106 3.814-2.743 5.042a9.5 9.5 0 0 1-2.592 1.354c.215.491.335 1.033.335 1.604v3a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-.995c-.955.117-1.756.017-2.438-.272c-.711-.302-1.208-.77-1.58-1.218a10 10 0 0 1-.481-.638c-.145-.206-.255-.367-.37-.516c-.234-.302-.363-.385-.447-.413a1 1 0 0 1 .632-1.897c.666.222 1.1.702 1.397 1.087c.15.195.298.409.423.586c.132.188.254.356.382.51c.253.302.506.522.826.657c.314.134.776.22 1.5.12L8 17.978a4 4 0 0 1 .334-1.582a9.5 9.5 0 0 1-2.59-1.354C4.105 13.815 3 12.043 3 10c0-1.346.483-2.583 1.284-3.62c-.21-.82-.192-1.647-.112-2.282c.074-.59.155-1.295.571-1.757c.59-.653 1.584-.268 2.28-.03c.619.21 1.384.544 2.125 1.044A11.4 11.4 0 0 1 12 3.001c.993 0 1.951.124 2.849.355a9 9 0 0 1 2.125-1.046" /></svg>
-      </a></li>
-      <li><a target="_blank" rel="noopener noreferrer" href="{{ site.data.socials.linkedin.url | default: '#' }}" aria-label="LinkedIn (opens in new tab)">
-        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none" /><path fill="currentColor" d="M6.94 5a2 2 0 1 1-4-.002a2 2 0 0 1 4 .002M7 8.48H3V21h4zm6.32 0H9.34V21h3.94v-6.57c0-3.66 4.77-4 4.77 0V21H22v-7.93c0-6.17-7.06-5.94-8.72-2.91z" /></svg>
-      </a></li>
-      <li><a target="_blank" rel="noopener noreferrer" href="{{ site.data.socials.google_scholar.url | default: '#' }}" aria-label="Google Scholar (opens in new tab)">
-        <svg xmlns="http://www.w3.org/2000/svg" width="0.75em" height="1em" viewBox="0 0 384 512"><path d="M0 0h384v512H0z" fill="none" /><path fill="currentColor" d="M343.759 106.662V79.43L363.524 64h-213.89L20.476 176.274h85.656a82 82 0 0 0-.219 6.225c0 20.845 7.22 38.087 21.672 51.861c14.453 13.797 32.252 20.648 53.327 20.648c4.923 0 9.75-.368 14.438-1.024c-2.907 6.5-4.374 12.523-4.374 18.142c0 9.875 4.499 20.43 13.467 31.642c-39.234 2.67-68.061 9.732-86.437 21.163c-10.531 6.5-19 14.704-25.39 24.531c-6.391 9.9-9.578 20.515-9.578 31.962c0 9.648 2.062 18.336 6.219 26.062c4.156 7.726 9.578 14.07 16.312 18.984c6.718 4.968 14.469 9.101 23.219 12.469c8.734 3.344 17.406 5.718 26.061 7.062A167 167 0 0 0 180.555 448c13.469 0 26.953-1.734 40.547-5.187c13.562-3.485 26.28-8.642 38.171-15.493c11.86-6.805 21.515-16.086 28.922-27.718c7.39-11.68 11.094-24.805 11.094-39.336c0-11.016-2.25-21.039-6.75-30.14c-4.468-9.073-9.938-16.542-16.452-22.345c-6.501-5.813-13-11.155-19.516-15.968c-6.5-4.845-12-9.75-16.468-14.813c-4.485-5.046-6.735-10.054-6.735-14.984c0-4.921 1.734-9.672 5.216-14.265c3.455-4.61 7.674-9.048 12.61-13.306c4.937-4.25 9.875-8.968 14.796-14.133c4.922-5.147 9.141-11.827 12.61-20.008c3.485-8.18 5.203-17.445 5.203-27.757c0-13.453-2.547-24.46-7.547-33.314c-.594-1.022-1.218-1.803-1.875-3.022l56.907-46.672v17.119c-7.393.93-6.624 5.345-6.624 10.635V245.96c0 5.958 4.875 10.834 10.834 10.834h3.989c5.958 0 10.833-4.875 10.833-10.834V117.293c0-5.277.778-9.688-6.561-10.63m-107.36 222.48c1.14.75 3.704 2.78 7.718 6.038c4.05 3.243 6.797 5.695 8.266 7.414a444 444 0 0 1 6.376 7.547c2.813 3.375 4.718 6.304 5.718 8.734q1.5 3.717 3.047 8.946a38.3 38.3 0 0 1 1.485 10.562c0 17.048-6.564 29.68-19.656 37.859c-13.125 8.18-28.767 12.274-46.938 12.274c-9.187 0-18.203-1.093-27.063-3.196c-8.843-2.116-17.311-5.336-25.39-9.601c-8.078-4.258-14.577-10.204-19.5-17.797c-4.938-7.64-7.407-16.415-7.407-26.25c0-10.32 2.797-19.29 8.422-26.906c5.594-7.625 12.938-13.391 22.032-17.315c9.063-3.946 18.25-6.742 27.562-8.398a158 158 0 0 1 28.438-2.555c4.47 0 7.936.25 10.405.696c.455.219 3.032 2.07 7.735 5.563c4.704 3.462 7.625 5.595 8.75 6.384zm-3.359-100.579c-7.406 8.86-17.734 13.288-30.953 13.288c-11.86 0-22.298-4.764-31.266-14.312c-9-9.523-15.422-20.328-19.344-32.43c-3.937-12.109-5.906-23.984-5.906-35.648q.002-20.54 10.781-34.976c7.187-9.65 17.5-14.485 30.938-14.485c11.875 0 22.374 5.038 31.437 15.157c9.094 10.085 15.61 21.413 19.517 33.968c3.922 12.54 5.873 24.53 5.873 35.984c0 13.446-3.702 24.61-11.076 33.454z" /></svg>
-      </a></li>
-      <li><a target="_blank" rel="noopener noreferrer" href="{{ site.data.socials.youtube.url | default: '#' }}" aria-label="YouTube (opens in new tab)">
-        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none" /><path fill="currentColor" d="m10 15l5.19-3L10 9zm11.56-7.83c.13.47.22 1.1.28 1.9c.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83c-.25.9-.83 1.48-1.73 1.73c-.47.13-1.33.22-2.65.28c-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44c-.9-.25-1.48-.83-1.73-1.73c-.13-.47-.22-1.1-.28-1.9c-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83c.25-.9.83-1.48 1.73-1.73c.47-.13 1.33-.22 2.65-.28c1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44c.9.25 1.48.83 1.73 1.73" /></svg>
-      </a></li>
+      <li>
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href="{{ site.data.socials.github.url | default: 'https://github.com/bigeco' }}"
+          aria-label="GitHub (opens in new tab)"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none" /><path fill="currentColor" d="M16.974 2.31c.696-.237 1.69-.62 2.279.032c.4.444.5 1.188.571 1.755c.08.634.099 1.462-.111 2.282C20.516 7.415 21 8.653 21 10c0 2.042-1.106 3.814-2.743 5.042a9.5 9.5 0 0 1-2.592 1.354c.215.491.335 1.033.335 1.604v3a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-.995c-.955.117-1.756.017-2.438-.272c-.711-.302-1.208-.77-1.58-1.218a10 10 0 0 1-.481-.638c-.145-.206-.255-.367-.37-.516c-.234-.302-.363-.385-.447-.413a1 1 0 0 1 .632-1.897c.666.222 1.1.702 1.397 1.087c.15.195.298.409.423.586c.132.188.254.356.382.51c.253.302.506.522.826.657c.314.134.776.22 1.5.12L8 17.978a4 4 0 0 1 .334-1.582a9.5 9.5 0 0 1-2.59-1.354C4.105 13.815 3 12.043 3 10c0-1.346.483-2.583 1.284-3.62c-.21-.82-.192-1.647-.112-2.282c.074-.59.155-1.295.571-1.757c.59-.653 1.584-.268 2.28-.03c.619.21 1.384.544 2.125 1.044A11.4 11.4 0 0 1 12 3.001c.993 0 1.951.124 2.849.355a9 9 0 0 1 2.125-1.046" />
+          </svg>
+        </a>
+      </li>
+      <li>
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href="{{ site.data.socials.linkedin.url | default: '#' }}"
+          aria-label="LinkedIn (opens in new tab)"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none" /><path fill="currentColor" d="M6.94 5a2 2 0 1 1-4-.002a2 2 0 0 1 4 .002M7 8.48H3V21h4zm6.32 0H9.34V21h3.94v-6.57c0-3.66 4.77-4 4.77 0V21H22v-7.93c0-6.17-7.06-5.94-8.72-2.91z" />
+          </svg>
+        </a>
+      </li>
+      <li>
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href="{{ site.data.socials.google_scholar.url | default: '#' }}"
+          aria-label="Google Scholar (opens in new tab)"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="0.75em" height="1em" viewBox="0 0 384 512">
+            <path d="M0 0h384v512H0z" fill="none" /><path fill="currentColor" d="M343.759 106.662V79.43L363.524 64h-213.89L20.476 176.274h85.656a82 82 0 0 0-.219 6.225c0 20.845 7.22 38.087 21.672 51.861c14.453 13.797 32.252 20.648 53.327 20.648c4.923 0 9.75-.368 14.438-1.024c-2.907 6.5-4.374 12.523-4.374 18.142c0 9.875 4.499 20.43 13.467 31.642c-39.234 2.67-68.061 9.732-86.437 21.163c-10.531 6.5-19 14.704-25.39 24.531c-6.391 9.9-9.578 20.515-9.578 31.962c0 9.648 2.062 18.336 6.219 26.062c4.156 7.726 9.578 14.07 16.312 18.984c6.718 4.968 14.469 9.101 23.219 12.469c8.734 3.344 17.406 5.718 26.061 7.062A167 167 0 0 0 180.555 448c13.469 0 26.953-1.734 40.547-5.187c13.562-3.485 26.28-8.642 38.171-15.493c11.86-6.805 21.515-16.086 28.922-27.718c7.39-11.68 11.094-24.805 11.094-39.336c0-11.016-2.25-21.039-6.75-30.14c-4.468-9.073-9.938-16.542-16.452-22.345c-6.501-5.813-13-11.155-19.516-15.968c-6.5-4.845-12-9.75-16.468-14.813c-4.485-5.046-6.735-10.054-6.735-14.984c0-4.921 1.734-9.672 5.216-14.265c3.455-4.61 7.674-9.048 12.61-13.306c4.937-4.25 9.875-8.968 14.796-14.133c4.922-5.147 9.141-11.827 12.61-20.008c3.485-8.18 5.203-17.445 5.203-27.757c0-13.453-2.547-24.46-7.547-33.314c-.594-1.022-1.218-1.803-1.875-3.022l56.907-46.672v17.119c-7.393.93-6.624 5.345-6.624 10.635V245.96c0 5.958 4.875 10.834 10.834 10.834h3.989c5.958 0 10.833-4.875 10.833-10.834V117.293c0-5.277.778-9.688-6.561-10.63m-107.36 222.48c1.14.75 3.704 2.78 7.718 6.038c4.05 3.243 6.797 5.695 8.266 7.414a444 444 0 0 1 6.376 7.547c2.813 3.375 4.718 6.304 5.718 8.734q1.5 3.717 3.047 8.946a38.3 38.3 0 0 1 1.485 10.562c0 17.048-6.564 29.68-19.656 37.859c-13.125 8.18-28.767 12.274-46.938 12.274c-9.187 0-18.203-1.093-27.063-3.196c-8.843-2.116-17.311-5.336-25.39-9.601c-8.078-4.258-14.577-10.204-19.5-17.797c-4.938-7.64-7.407-16.415-7.407-26.25c0-10.32 2.797-19.29 8.422-26.906c5.594-7.625 12.938-13.391 22.032-17.315c9.063-3.946 18.25-6.742 27.562-8.398a158 158 0 0 1 28.438-2.555c4.47 0 7.936.25 10.405.696c.455.219 3.032 2.07 7.735 5.563c4.704 3.462 7.625 5.595 8.75 6.384zm-3.359-100.579c-7.406 8.86-17.734 13.288-30.953 13.288c-11.86 0-22.298-4.764-31.266-14.312c-9-9.523-15.422-20.328-19.344-32.43c-3.937-12.109-5.906-23.984-5.906-35.648q.002-20.54 10.781-34.976c7.187-9.65 17.5-14.485 30.938-14.485c11.875 0 22.374 5.038 31.437 15.157c9.094 10.085 15.61 21.413 19.517 33.968c3.922 12.54 5.873 24.53 5.873 35.984c0 13.446-3.702 24.61-11.076 33.454z" />
+          </svg>
+        </a>
+      </li>
+      <li>
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href="{{ site.data.socials.youtube.url | default: '#' }}"
+          aria-label="YouTube (opens in new tab)"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none" /><path fill="currentColor" d="m10 15l5.19-3L10 9zm11.56-7.83c.13.47.22 1.1.28 1.9c.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83c-.25.9-.83 1.48-1.73 1.73c-.47.13-1.33.22-2.65.28c-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44c-.9-.25-1.48-.83-1.73-1.73c-.13-.47-.22-1.1-.28-1.9c-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83c.25-.9.83-1.48 1.73-1.73c.47-.13 1.33-.22 2.65-.28c1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44c.9.25 1.48.83 1.73 1.73" />
+          </svg>
+        </a>
+      </li>
     </ul>
   </div>
+</header>
 
+<div id="folio-app" class="folio-home">
   <div class="folio-hero">
-    <span class="script">{{ site.first_name }}</span>
-    <span class="bold">{{ site.last_name }}</span>
+    <span class="hero-name"
+      ><span class="script">{{ site.first_name }}</span> <span class="bold">{{ site.last_name }}</span></span
+    >
   </div>
 
   <nav class="folio-nav">
     <a href="{{ '/about/'        | relative_url }}"><span class="num">01</span>About</a>
     <a href="{{ '/blog/'         | relative_url }}"><span class="num">02</span>Blog</a>
-    <a href="{{ '/playground/'   | relative_url }}"><span class="num">03</span>Playground</a>
-    <a href="{{ '/publications/' | relative_url }}"><span class="num">04</span>Publications</a>
+    <a href="#publications"><span class="num">03</span>Publications</a>
+    <a href="#playground"><span class="num">04</span>Playground</a>
     <a href="mailto:{{ site.email }}"><span class="num">05</span>Contact</a>
     <span class="copy">&copy;{{ 'now' | date: '%Y' }}</span>
   </nav>
@@ -295,18 +540,113 @@ layout: default
       src="{{ '/assets/img/mouse_drawing.svg' | relative_url }}"
       alt=""
       aria-hidden="true"
-    />
+    >
 
     <p class="blurb">{{ page.folio.right | default: 'Passionate about creating clean, reliable, and elegant digital experiences.' }}</p>
   </div>
+</div>
 
-  <p class="folio-caption">{{ page.folio.caption | default: 'Just an ordinary developer. From Korea with love.' }}</p>
+<button id="folio-glass-toggle" class="folio-glass" type="button" aria-label="Toggle liquid glass" title="Liquid Glass on/off">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z" />
+  </svg>
+  <span class="folio-glass__off" aria-hidden="true"></span>
+</button>
 
-  <button id="folio-theme-toggle" class="folio-theme" type="button" aria-label="Toggle dark mode" title="Toggle dark / light">
-    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z" /></svg>
-    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2" /><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4 -1.4M17.7 6.3l1.4 -1.4" /></svg>
-  </button>
+<button id="folio-theme-toggle" class="folio-theme" type="button" aria-label="Toggle dark mode" title="Toggle dark / light">
+  <svg
+    class="icon-moon"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.6"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z" />
+  </svg>
+  <svg
+    class="icon-sun"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.6"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+  >
+    <circle cx="12" cy="12" r="4.2" /><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4 -1.4M17.7 6.3l1.4 -1.4" />
+  </svg>
+</button>
 
+{% comment %} ===== PUBLICATIONS (논문 아코디언, _data/publications.yml) ===== {% endcomment %}
+<section id="publications">
+  <div class="sec-head">
+    <div class="sec-head__num">[03]</div>
+    <h2 class="sec-head__title">Publications</h2>
+    <div class="sec-head__count">
+      {{ site.data.publications.size }} Paper{% unless site.data.publications.size == 1 %}s{% endunless %}
+    </div>
+  </div>
+  <ul class="pubs-list">
+    {% for pub in site.data.publications %}
+      <li class="pub-item" data-open="false">
+        <div class="pub-row">
+          <div class="pub-row__main">
+            {% if pub.venue %}
+              <div class="pub-venue">{{ pub.venue }}</div>
+            {% endif %}
+            <div class="pub-title">{{ pub.title }}</div>
+          </div>
+          <div class="pub-actions">
+            {% if pub.pdf and pub.pdf != '' %}
+              <a class="pub-btn" href="{{ pub.pdf }}" target="_blank" rel="noopener noreferrer">PDF</a>
+            {% endif %}
+            {% if pub.arxiv and pub.arxiv != '' %}
+              <a class="pub-btn" href="{{ pub.arxiv }}" target="_blank" rel="noopener noreferrer">arXiv</a>
+            {% endif %}
+            <button class="pub-toggle" type="button" aria-expanded="false" aria-label="Toggle abstract">+</button>
+          </div>
+        </div>
+        <div class="pub-panel">
+          <div class="pub-panel__inner">
+            <p class="pub-abstract">{{ pub.abstract }}</p>
+          </div>
+        </div>
+      </li>
+    {% endfor %}
+  </ul>
+</section>
+
+{% comment %} ===== PLAYGROUND (모자이크) ===== {% endcomment %}
+<section id="playground">
+  <div class="sec-head">
+    <div class="sec-head__num">[04]</div>
+    <h2 class="sec-head__title">Playground</h2>
+    <div class="sec-head__count" id="pg-count">— Items</div>
+  </div>
+  <div class="mosaic" id="mosaic" role="list"></div>
+  <div class="sec-foot">
+    <span>
+      {{- site.first_name }}
+      {{ site.last_name -}}
+    </span>
+  </div>
+</section>
+
+{% comment %} PLAYGROUND 상세 모달 {% endcomment %}
+<div class="pg-detail" id="pg-detail" data-open="false" aria-hidden="true" role="dialog" aria-modal="true">
+  <div class="pg-detail__bar">
+    <span id="pg-detail-crumb">№000</span>
+    <button class="pg-detail__close" id="pg-detail-close" type="button">Close ✕</button>
+  </div>
+  <img class="pg-detail__img" id="pg-detail-img" src="" alt="">
+  <div class="pg-detail__body">
+    <h2 class="pg-detail__title" id="pg-detail-title"></h2>
+    <div class="pg-detail__meta"><span id="pg-detail-client"></span><span id="pg-detail-year"></span><span id="pg-detail-role"></span></div>
+    <p class="pg-detail__brief" id="pg-detail-brief"></p>
+  </div>
 </div>
 
 {% comment %} ===== 낮/밤 토글 동작 (al-folio의 setThemeSetting 재사용) ===== {% endcomment %}
@@ -336,11 +676,173 @@ layout: default
       // Liquid Glass 효과에 테마 변경을 알림(다크=효과 제거 / 라이트=새 색으로 재생성)
       window.dispatchEvent(new Event("folio:themechange"));
     });
+
+    // 유리 on/off 버튼 → 모듈로 이벤트 전달
+    var gbtn = document.getElementById("folio-glass-toggle");
+    if (gbtn) {
+      gbtn.addEventListener("click", function () {
+        window.dispatchEvent(new Event("folio:glasstoggle"));
+      });
+    }
+
+    // 고정 헤더: 아래로 스크롤하면 숨기고, 위로 스크롤하면 표시 (Google Labs 스타일)
+    var header = document.getElementById("folio-header");
+    if (header) {
+      var lastY = window.scrollY || 0;
+      var ticking = false;
+      function onHeaderScroll() {
+        var y = window.scrollY || document.documentElement.scrollTop || 0;
+        if (y < 80) {
+          header.dataset.hidden = "false"; // 최상단 근처에서는 항상 표시
+        } else if (y > lastY + 6) {
+          header.dataset.hidden = "true";  // 아래로 스크롤 → 숨김
+        } else if (y < lastY - 6) {
+          header.dataset.hidden = "false"; // 위로 스크롤 → 표시
+        }
+        lastY = y;
+        ticking = false;
+      }
+      window.addEventListener("scroll", function () {
+        if (!ticking) { window.requestAnimationFrame(onHeaderScroll); ticking = true; }
+      }, { passive: true });
+    }
   })();
 </script>
 {% endraw %}
 
-{% comment %} ===== Liquid Glass 효과 (VFX-JS) — {% endcomment %}{% comment %} raw 로 감싸 Liquid 파싱 방지 ===== {% endcomment %}
+{% comment %} ===== Playground 모자이크 + 상세 모달 + Publications 아코디언 ===== {% endcomment %}
+{% raw %}
+<script>
+  (function () {
+    /* ---------- Playground 모자이크 ---------- */
+    const TILE_COUNT = 96;
+    const IDS = [
+      "1609605348579-3123e3d40eb8","1533226458520-6f71cffeaa6a","1617050318658-a9a3175e34cb",
+      "1461958508236-9a742665a0d5","1596299786007-9974099be52b","1581080247486-57989c1f14ab",
+      "1611532736597-de2d4265fba3","1513909894411-7d7e04c28ecd","1603204254626-d0de8eb24cf1",
+      "1619632973808-4acf8041df42","1505356822725-08ad25f3ffe4","1566978862346-73282aa378a4",
+      "1617575521317-d2974f3b56d2","1610454059909-f9a5a6eb4e58","1504625709867-b4e45e3bb9dd",
+      "1446771326090-d910bfaf00f6","1536924491042-b0466800ce46","1625390711106-3728815ebcd9",
+      "1595658511703-2cad160de181","1591280122880-eec70c6a5810","1600730424902-a3a3be6af112",
+      "1522743791393-522312deeebf","1609670530579-fe311b3630cc","1469474968028-56623f02e42e"
+    ];
+    const YEARS = [2026, 2025, 2025, 2024, 2024, 2023, 2023, 2022, 2021, 2019];
+    const TITLES = ["Counterpoint","Field Notes","Minor Index","Long Form","Working Title","Volume One","Inventory","After Image","Open Set","New Standard","Footnote","Reprint"];
+    const CLIENTS = ["Atelier Borel","Maison Klein","Volume Zero","Studio Forme","Index Magazine","Office of Things"];
+    const ROLES = ["Lead Designer","Art Direction","Type & Layout","Creative Direction"];
+    const BRIEF = "설명을 여기에 넣으세요. 각 작업의 배경, 접근 방식, 결과를 자유롭게 적을 수 있습니다. (지금은 예시 텍스트입니다.)";
+    const img = (id) => `https://images.unsplash.com/photo-${id}?w=600&h=600&fit=crop&q=70&auto=format`;
+    const imgLarge = (id) => `https://images.unsplash.com/photo-${id}?w=1600&h=900&fit=crop&q=75&auto=format`;
+
+    const mosaic = document.getElementById("mosaic");
+    const count = document.getElementById("pg-count");
+    const data = [];
+    if (mosaic) {
+      count && (count.textContent = TILE_COUNT + " Items");
+      const tiles = [];
+      for (let i = 0; i < TILE_COUNT; i++) {
+        const id = IDS[i % IDS.length];
+        const p = {
+          num: String(i + 1).padStart(3, "0"),
+          year: YEARS[i % YEARS.length],
+          title: TITLES[i % TITLES.length] + " №" + String((i % 12) + 1).padStart(2, "0"),
+          client: CLIENTS[i % CLIENTS.length],
+          role: ROLES[i % ROLES.length],
+          img: imgLarge(id),
+        };
+        data.push(p);
+        const a = document.createElement("a");
+        a.className = "tile";
+        a.href = "#";
+        a.setAttribute("role", "listitem");
+        a.innerHTML =
+          '<img src="' + img(id) + '" alt="' + p.title + '" loading="' + (i < 12 ? "eager" : "lazy") + '" decoding="async">' +
+          '<div class="tile__label"><span>[' + p.num + ']</span><span>' + p.year + '</span></div>';
+        a.addEventListener("click", (e) => { e.preventDefault(); openDetail(i); });
+        mosaic.appendChild(a);
+        tiles.push(a);
+      }
+
+      const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (reduce) {
+        tiles.forEach((t) => (t.dataset.visible = "true"));
+      } else {
+        let waveStart = performance.now(), waveCount = 0;
+        const io = new IntersectionObserver((entries) => {
+          const now = performance.now();
+          if (now - waveStart > 400) { waveStart = now; waveCount = 0; }
+          entries.forEach((en) => {
+            if (en.isIntersecting) {
+              en.target.style.setProperty("--reveal-delay", Math.min(waveCount * 35, 600) + "ms");
+              en.target.dataset.visible = "true";
+              waveCount++;
+              io.unobserve(en.target);
+            }
+          });
+        }, { rootMargin: "0px 0px -10% 0px", threshold: 0.05 });
+        tiles.forEach((t) => io.observe(t));
+      }
+    }
+
+    /* ---------- 상세 모달 ---------- */
+    const detail = document.getElementById("pg-detail");
+    const dImg = document.getElementById("pg-detail-img");
+    const dTitle = document.getElementById("pg-detail-title");
+    const dCrumb = document.getElementById("pg-detail-crumb");
+    const dClient = document.getElementById("pg-detail-client");
+    const dYear = document.getElementById("pg-detail-year");
+    const dRole = document.getElementById("pg-detail-role");
+    const dBrief = document.getElementById("pg-detail-brief");
+    const dClose = document.getElementById("pg-detail-close");
+
+    function openDetail(i) {
+      const p = data[i];
+      if (!p || !detail) return;
+      dImg.src = p.img; dImg.alt = p.title;
+      dTitle.textContent = p.title;
+      dCrumb.textContent = "№" + p.num;
+      dClient.textContent = p.client;
+      dYear.textContent = p.year;
+      dRole.textContent = p.role;
+      dBrief.textContent = BRIEF;
+      detail.dataset.open = "true";
+      detail.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+      detail.scrollTop = 0;
+    }
+    function closeDetail() {
+      if (!detail) return;
+      detail.dataset.open = "false";
+      detail.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+    }
+    dClose && dClose.addEventListener("click", closeDetail);
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape" && detail && detail.dataset.open === "true") closeDetail(); });
+
+    /* ---------- Publications 아코디언 ---------- */
+    const items = document.querySelectorAll("#publications .pub-item");
+    items.forEach((item) => {
+      const toggle = item.querySelector(".pub-toggle");
+      toggle.addEventListener("click", () => {
+        const willOpen = item.dataset.open !== "true";
+        items.forEach((o) => {
+          if (o !== item) {
+            o.dataset.open = "false";
+            const t = o.querySelector(".pub-toggle");
+            t.setAttribute("aria-expanded", "false"); t.textContent = "+";
+          }
+        });
+        item.dataset.open = String(willOpen);
+        toggle.setAttribute("aria-expanded", String(willOpen));
+        toggle.textContent = willOpen ? "−" : "+";
+      });
+    });
+  })();
+</script>
+{% endraw %}
+
+{% comment %} ===== Liquid Glass 효과 (VFX-JS) — {% endcomment %}
+{% comment %} raw 로 감싸 Liquid 파싱 방지 ===== {% endcomment %}
 {% raw %}
 <script type="module">
   // Liquid glass post-effect — original by Amagi (MIT), https://codepen.io/fand/pen/azmPjqd
@@ -363,6 +865,12 @@ layout: default
     catch (e) { return false; }
   }
   const enableGlass = !prefersReduced && !isSmall && hasWebGL2();
+
+  // 유리를 지원하지 않으면 유리 on/off 버튼을 숨김
+  if (!enableGlass) {
+    const gb = document.getElementById("folio-glass-toggle");
+    if (gb) gb.style.display = "none";
+  }
 
   const postEffectShader = `
     precision highp float;
@@ -674,6 +1182,8 @@ layout: default
       async function buildGlass() {
         if (vfx) return;
         const inst = new VFX({
+          zIndex: 1,
+          pixelRatio: Math.min((window.devicePixelRatio || 1) * 2, 3), // 슈퍼샘플링 → 텍스트 선명도 개선
           postEffect: {
             shader: postEffectShader,
             uniforms: {
@@ -718,13 +1228,19 @@ layout: default
         }
       }
 
+      // 유리 상태(버튼 on/off, 스크롤 위치)
+      let glassEnabled = true;
+      let scrolledAway = false;
+      const atTop = () => (window.scrollY || document.documentElement.scrollTop || 0) <= 4;
+
       applyGlassForTheme();
 
-      // 낮/밤 전환 시: 캔버스는 그대로 두고 '새 색으로 다시 캡처'만 → 크기 깜빡임 없음
+      // 낮/밤 전환 시
       let rebuildTimer = null;
       window.addEventListener("folio:themechange", () => {
-        const shouldShow = GLASS_IN_DARK || !isDark();
-        if (!shouldShow) { teardownGlass(); return; } // 다크에서 유리 끄는 설정일 때만
+        // 유리가 꺼져 있거나(버튼), 스크롤 상태거나, 다크-끄기 설정이면 표시 안 함
+        const shouldShow = glassEnabled && atTop() && (GLASS_IN_DARK || !isDark());
+        if (!shouldShow) { teardownGlass(); return; }
         if (!vfx) { buildGlass(); return; }           // 유리가 없던 상태면 새로 생성
 
         // 색이 즉시 확정되므로(전환 애니메이션 제거됨) 다음 프레임에 제자리 재캡처
@@ -753,6 +1269,34 @@ layout: default
         socials.addEventListener("focusin", reglass);
         socials.addEventListener("focusout", reglass);
       }
+
+      // 유리 on/off 버튼 + 스크롤 시 캔버스 제거(흰 화면 방지) / 최상단 복원
+      window.addEventListener("folio:glasstoggle", () => {
+        glassEnabled = !glassEnabled;
+        const gb = document.getElementById("folio-glass-toggle");
+        if (gb) gb.dataset.off = String(!glassEnabled);
+        if (!glassEnabled) {
+          teardownGlass();
+        } else if (atTop() && (GLASS_IN_DARK || !isDark())) {
+          buildGlass();
+          scrolledAway = false;
+        } else {
+          scrolledAway = true; // 스크롤 상태면 최상단 복귀 때 생성
+        }
+      });
+
+      // 유리는 첫 화면 전용 효과 → 스크롤하면 캔버스를 제거해 아래 섹션을 덮지 않게
+      window.addEventListener("scroll", () => {
+        if (!glassEnabled) return;
+        const y = window.scrollY || document.documentElement.scrollTop || 0;
+        if (y > 40 && !scrolledAway) {
+          scrolledAway = true;
+          teardownGlass();
+        } else if (y <= 4 && scrolledAway) {
+          scrolledAway = false;
+          if (GLASS_IN_DARK || !isDark()) buildGlass();
+        }
+      }, { passive: true });
     });
   }
 </script>
