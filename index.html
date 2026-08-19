@@ -1,3 +1,636 @@
 <!DOCTYPE html> <html lang="ko"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> Songeun Lee </title> <meta name="author" content="Songeun Lee"> <meta name="description" content="A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design. "> <meta name="keywords" content="jekyll, jekyll-theme, academic-website, portfolio-website"> <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self' data: https:; media-src 'self' https:; frame-src 'self' https:; connect-src 'self' https:;"> <link rel="stylesheet" href="/assets/css/bootstrap.min.css?v=a4b3f509e79c54a512b890d73235ef04"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="/assets/css/academicons.min.css?v=f0b7046b84e425c55f3463ac249818f5"> <link defer rel="stylesheet" href="/assets/css/scholar-icons.css?v=62b2ac103a88034e6882a5be5f3e2772"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?v=591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="/assets/img/favicon.png?v=97f913be78f9769bda76181581f55853"> <link rel="stylesheet" href="/assets/css/main.css?v=d41d8cd98f00b204e9800998ecf8427e"> <link rel="canonical" href="https://bigeco.github.io/"> <script src="/assets/js/theme.js?v=5fea5159b787642c1bbc1f334d60f883"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?v=5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
     initTheme();
-  </script> </head> <body class="fixed-top-nav "> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse text-right" id="navbarNav"> <ul class="navbar-nav ml-auto flex-nowrap"> <li class="nav-item active"> <a class="nav-link" href="/">about <span class="sr-only">(current)</span> </a> </li> <li class="nav-item "> <a class="nav-link" href="/blog/">blog </a> </li> <li class="nav-item "> <a class="nav-link" href="/publications/">publications </a> </li> <li class="nav-item "> <a class="nav-link" href="/projects/">projects </a> </li> <li class="nav-item "> <a class="nav-link" href="/assets/pdf/example_pdf.pdf">cv </a> </li> <li class="nav-item "> <a class="nav-link" href="/todo/">todo </a> </li> <li class="nav-item"> <button id="search-toggle" title="Search" onclick="openSearchModal()"> <span class="nav-link">ctrl k <i class="fa-solid fa-magnifying-glass"></i></span> </button> </li> <li class="toggle-container"> <button id="light-toggle" title="Change theme"> <i class="fa-half-sun-moon" id="light-toggle-system"></i> <i class="fa-solid fa-moon" id="light-toggle-dark"></i> <i class="fa-solid fa-sun" id="light-toggle-light"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="post"> <header class="post-header"> <h1 class="post-title"> <span class="font-weight-bold">Songeun</span> Lee </h1> <p class="desc"><a href="#">Affiliations</a>. Address. Contacts. Motto. Etc.</p> </header> <article> <div class="profile float-right"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/me-480.webp 480w,/assets/img/me-800.webp 800w,/assets/img/me-1400.webp 1400w," type="image/webp" sizes="(min-width: 930px) 270.0px, (min-width: 576px) 30vw, 95vw"> <img src="/assets/img/me.png?v=d6269907e4196ffd45bdef123e1d74a2" class="img-fluid z-depth-1 rounded" width="100%" height="auto" alt="me.png" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"> </source></picture> </figure> <div class="more-info"> <p></p> </div> </div> <div class="clearfix"> <p>Write your biography here. Tell the world about yourself. Link to your favorite <a href="https://www.reddit.com" rel="external nofollow noopener" target="_blank">subreddit</a>. You can put a picture in, too. The code is already in, just name your picture <code class="language-plaintext highlighter-rouge">prof_pic.jpg</code> and put it in the <code class="language-plaintext highlighter-rouge">img/</code> folder.</p> <p>Put your address / P.O. box / other info right below your picture. You can also disable any of these elements by editing <code class="language-plaintext highlighter-rouge">profile</code> property of the YAML header of your <code class="language-plaintext highlighter-rouge">_pages/about.md</code>. Edit <code class="language-plaintext highlighter-rouge">_bibliography/papers.bib</code> and Jekyll will render your <a href="/al-folio/publications/">publications page</a> automatically.</p> <p>Link to your social media connections, too. This theme is set up to use <a href="https://fontawesome.com/" rel="external nofollow noopener" target="_blank">Font Awesome icons</a> and <a href="https://jpswalsh.github.io/academicons/" rel="external nofollow noopener" target="_blank">Academicons</a>, like the ones below. Add your Facebook, Twitter, LinkedIn, Google Scholar, or just disable all of them.</p> </div> <div class="social"> <div class="contact-icons"> <a href="mailto:" title="Email"><img src="https://img.icons8.com/fluency-systems-regular/96/new-post.png" alt="Email"></a> <a href="" title="linkedin"><img src="https://img.icons8.com/fluency-systems-regular/96/linkedin.png" alt="linkedin"></a> <a href="" title="google scholar"><img src="https://img.icons8.com/material-outlined/96/google-scholar.png" alt="google scholar"></a> <a href="https://github.com/bigeco" title="Github" rel="external nofollow noopener" target="_blank"><img src="https://img.icons8.com/fluency-systems-regular/96/github.png" alt="Github"></a> <a href="" title="youtube"><img src="https://img.icons8.com/material-rounded/96/youtube-play.png" alt="youtube"></a> </div> <div class="contact-note"></div> </div> </article> </div> </div> <footer class="fixed-bottom" role="contentinfo"> <div class="container mt-0"> © Copyright 2026 Songeun Lee. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="/assets/js/bootstrap.bundle.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/assets/js/masonry.js?v=a0db7e5d5c70cc3252b3138b0c91dcaf" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js?v=85ddb88934d28b74e78031fd54cf8308"></script> <script src="/assets/js/no_defer.js?v=2781658a0a2b13ed609542042a859126"></script> <script defer src="/assets/js/common.js?v=c15de51d4bb57887caa2c21988d97279"></script> <script defer src="/assets/js/copy_code.js?v=c8a01c11a92744d44b093fc3bda915df" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?v=d9f17b6adc2311cbabd747f4538bb15f"></script> <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script> <script async src="https://badge.dimensions.ai/badge.js"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/js/mathjax-setup.js?v=a5bb4e6a542c546dd929b24b8b236dfd"></script> <script defer src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6" crossorigin="anonymous"></script> <script defer src="/assets/js/progress-bar.js?v=2f30e0e6801ea8f5036fa66e1ab0a71a" type="text/javascript"></script> <script type="module" src="/assets/js/search/ninja-keys.min.js?v=a3446f084dcaecc5f75aa1757d087dcf"></script> <ninja-keys hidebreadcrumbs noautoloadmdicons placeholder="Type to start searching"></ninja-keys> <script src="/assets/js/search-setup.js?v=6c304f7b1992d4b60f7a07956e52f04a"></script> <script src="/assets/js/search-data.js"></script> <script src="/assets/js/shortcut-key.js?v=ccc841c459bfc0e64c1c2b5acd10df02"></script> </body> </html>
+  </script> </head> <body class="fixed-top-nav "> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse text-right" id="navbarNav"> <ul class="navbar-nav ml-auto flex-nowrap"> <li class="nav-item active"> <a class="nav-link" href="/">about <span class="sr-only">(current)</span> </a> </li> <li class="nav-item "> <a class="nav-link" href="/blog/">blog </a> </li> <li class="nav-item "> <a class="nav-link" href="/projects/">projects </a> </li> <li class="nav-item "> <a class="nav-link" href="/assets/pdf/example_pdf.pdf">cv </a> </li> <li class="nav-item "> <a class="nav-link" href="/todo/">todo </a> </li> <li class="nav-item"> <button id="search-toggle" title="Search" onclick="openSearchModal()"> <span class="nav-link">ctrl k <i class="fa-solid fa-magnifying-glass"></i></span> </button> </li> <li class="toggle-container"> <button id="light-toggle" title="Change theme"> <i class="fa-half-sun-moon" id="light-toggle-system"></i> <i class="fa-solid fa-moon" id="light-toggle-dark"></i> <i class="fa-solid fa-sun" id="light-toggle-light"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&amp;family=Archivo:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"> <style>@font-face{font-family:"Google Sans";font-style:normal;font-weight:400;font-display:swap;src:url("/assets/fonts/GoogleSans-Regular.woff2") format("woff2")}@font-face{font-family:"Google Sans";font-style:normal;font-weight:500;font-display:swap;src:url("/assets/fonts/GoogleSans-Medium.woff2") format("woff2")}@font-face{font-family:"Google Sans";font-style:normal;font-weight:600 700;font-display:swap;src:url("/assets/fonts/GoogleSans-Bold.woff2") format("woff2")}#navbar,footer,#progress,.progress-container,#progressbar,#myBar,.post .post-header{display:none!important}html{scroll-behavior:smooth}html,body{margin:0!important;padding:0!important;overflow-x:hidden!important}.container.mt-5,.container[role="main"]{margin:0!important;padding:0!important;max-width:100%!important}.folio-home{--fg:#323232;--muted:#9a9a96;--line:#cfcfcb;--bg:oklch(96% .005 90);--cap:#4a4a48;background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;font-optical-sizing:auto;font-variation-settings:"GRAD" 0;position:relative;min-height:100vh;min-height:100dvh;overflow:hidden;padding:clamp(1rem,2.5vh,2.2rem) 24px clamp(1rem,2.5vh,2.4rem);box-sizing:border-box;display:flex;flex-direction:column}html.transition,html.transition *,html.transition *::before,html.transition *::after{transition:none!important}[data-theme="dark"] .folio-home{--fg:#f4f4f4;--muted:#5c5c5c;--line:#262626;--bg:#000;--cap:#8a8a8a}[data-theme="dark"] .folio-illus{filter:invert(1)}.folio-top{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:1rem;font-size:.8rem;line-height:1.35}.folio-top .brand{justify-self:start;display:inline-flex;align-items:center;gap:.45rem;font-weight:415;font-size:1.4rem;letter-spacing:0;white-space:nowrap}.folio-top .brand span{color:var(--fg)}.folio-top .brand-logo{width:1.5rem;height:1.5rem;object-fit:contain;flex-shrink:0}.folio-top .brand sup{font-size:.55em}.folio-top .folio-mark{justify-self:center;width:1.6rem;height:1.6rem;flex-shrink:0;color:var(--fg)}.folio-socials{justify-self:end;display:flex;gap:.55rem;list-style:none;margin:0;padding:0}.folio-socials a{width:2.4rem;height:2.4rem;display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--line);border-radius:50%;color:var(--fg);opacity:.55;transition:opacity .2s ease,background-color .2s ease,border-color .2s ease}.folio-socials a:hover,.folio-socials a:focus-visible{opacity:1;background-color:color-mix(in srgb,var(--fg) 7%,transparent);border-color:color-mix(in srgb,var(--fg) 32%,var(--line))}.folio-socials svg{height:1.15rem;width:auto;display:block}.folio-hero{text-align:center;line-height:.82;margin:clamp(0.5rem,2vh,2rem) 0;flex:1 1 auto;min-height:0;display:flex;align-items:center;justify-content:center}.folio-hero .hero-name{font-size:clamp(2.75rem,min(16vw,20vh),15rem)}.folio-hero .script{font-weight:500;letter-spacing:-0.02em;font-size:clamp(2.75rem,min(16vw,20vh),15rem);color:var(--fg)}.folio-hero .bold{font-weight:700;letter-spacing:-0.04em;font-size:clamp(2.75rem,min(16vw,20vh),15rem);color:var(--fg)}.folio-hero sup{font-size:clamp(1rem,2.5vw,2.2rem);font-weight:400;vertical-align:top;align-self:flex-start;margin-top:.4em}.folio-nav{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;align-items:flex-end;border-top:1px solid var(--line);padding-top:.9rem;font-size:.9rem}.folio-nav a{color:var(--fg);text-decoration:none;transition:opacity .2s}.folio-nav a:hover{opacity:.55}.folio-nav .num{color:var(--muted);font-size:.72rem;display:block}.folio-nav .copy{color:var(--muted)}.folio-foot{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:clamp(1rem,4vw,3rem);margin-top:clamp(2rem,6vw,5rem)}.folio-foot .blurb{font-size:.78rem;font-weight:500;letter-spacing:.3px;line-height:1.55;text-transform:uppercase;text-align:center;max-width:26ch;margin:0 auto}.folio-illus{width:clamp(80px,12vh,160px);height:auto;color:var(--fg)}.folio-caption{text-align:center;font-size:.82rem;color:var(--cap);margin-top:clamp(0.5rem,1.5vh,1.2rem)}.folio-theme{position:fixed;bottom:1.4rem;right:1.4rem;width:44px;height:44px;border-radius:50%;border:1px solid rgba(0,0,0,0.12);background:#fff;color:#171717;box-shadow:0 2px 12px rgba(0,0,0,0.18);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;z-index:9999;transition:background-color .3s ease,color .3s ease,box-shadow .3s ease,transform .15s ease}[data-theme="dark"] .folio-theme{background:#1a1a1a;color:#f4f4f4;border-color:rgba(255,255,255,0.16);box-shadow:0 2px 12px rgba(0,0,0,0.5)}.folio-theme:hover{transform:translateY(-1px)}.folio-theme:active{transform:translateY(0)}
+.folio-theme svg{width:18px;height:18px}.folio-theme .icon-sun{display:none}[data-theme="dark"] .folio-theme .icon-sun{display:block}[data-theme="dark"] .folio-theme .icon-moon{display:none}.folio-glass{position:fixed;bottom:calc(1.4rem + 52px);right:1.4rem;width:44px;height:44px;border-radius:50%;border:1px solid rgba(0,0,0,0.12);background:#fff;color:#171717;box-shadow:0 2px 12px rgba(0,0,0,0.18);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;z-index:9999;transition:background-color .3s ease,color .3s ease,transform .15s ease,opacity .2s ease}[data-theme="dark"] .folio-glass{background:#1a1a1a;color:#f4f4f4;border-color:rgba(255,255,255,0.16);box-shadow:0 2px 12px rgba(0,0,0,0.5)}.folio-glass:hover{transform:translateY(-1px)}.folio-glass svg{width:18px;height:18px}.folio-glass .folio-glass__off{position:absolute;width:26px;height:1.5px;background:currentColor;transform:rotate(-45deg);opacity:0;transition:opacity .2s}.folio-glass[data-off="true"]{opacity:.55}.folio-glass[data-off="true"] .folio-glass__off{opacity:1}.folio-header{position:fixed;top:0;left:0;right:0;z-index:9990;--fg:#323232;--line:#cfcfcb;--muted:#9a9a96;color:var(--fg);font-family:"Google Sans",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;transition:transform .35s cubic-bezier(0.4,0,0.2,1)}[data-theme="dark"] .folio-header{--fg:#f4f4f4;--line:#262626;--muted:#5c5c5c}.folio-header[data-hidden="true"]{transform:translateY(-115%)}.folio-header .folio-top{align-items:center;padding:.7rem clamp(1rem,4vw,2.5rem);background:rgba(245,244,239,0.72);-webkit-backdrop-filter:saturate(180%) blur(16px);backdrop-filter:saturate(180%) blur(16px)}[data-theme="dark"] .folio-header .folio-top{background:rgba(0,0,0,0.55)}.folio-home{scroll-margin-top:4rem}@media(max-height:760px){.folio-foot{margin-top:clamp(0.8rem,2.5vh,3rem)}.folio-illus{width:clamp(100px,14vh,180px)}.folio-foot .blurb{font-size:.72rem}}@media(max-width:720px){.folio-top{grid-template-columns:1fr;gap:.6rem}.folio-top .brand{justify-self:start}.folio-top .folio-mark{justify-self:start}.folio-socials{justify-self:start}.folio-foot{grid-template-columns:1fr;gap:.8rem}.folio-foot .folio-illus{order:-1;margin:0 auto;width:clamp(96px,12vh,150px)}.folio-foot .blurb{font-size:.7rem;max-width:34ch}}#playground,#publications{position:relative;z-index:2}#publications{--fg:#323232;--muted:#9a9a96;--line:#cfcfcb;--bg:oklch(96% .005 90);--cap:#4a4a48}[data-theme="dark"] #publications{--fg:#f4f4f4;--muted:#5c5c5c;--line:#262626;--bg:#000;--cap:#8a8a8a}.sec-head{display:grid;grid-template-columns:1fr;gap:.75rem;padding:3rem 24px 1.5rem;border-bottom:1px solid var(--sec-line,#171717)}@media(min-width:48rem){.sec-head{grid-template-columns:auto 1fr auto;align-items:end}}.sec-head__num,.sec-head__count{font-size:.75rem;text-transform:uppercase;letter-spacing:.05em;opacity:.5}.sec-head__title{font-size:clamp(2rem,6vw,4.5rem);line-height:.9;letter-spacing:-0.03em;text-transform:uppercase;margin:0}#playground{--c-bg:oklch(96% .005 90);--c-fg:oklch(15% 0 0);--c-fg-soft:oklch(15% 0 0 / .6);--c-line:oklch(15% 0 0);--c-accent:oklch(88% .22 125);--ff-display:"Archivo Black",ui-sans-serif,system-ui,sans-serif;--ff-mono:"JetBrains Mono",ui-monospace,monospace;background:var(--c-bg);color:var(--c-fg);padding-top:clamp(2rem,5vw,4rem)}#playground .sec-head{--sec-line:var(--c-line)}#playground .sec-head__num,#playground .sec-head__count{font-family:var(--ff-mono)}#playground .sec-head__title{font-family:var(--ff-display)}[data-theme="dark"] #playground{--c-bg:#000;--c-fg:#f4f4f4;--c-fg-soft:rgba(244,244,244,0.55);--c-line:#262626}[data-theme="dark"] .pg-detail{background:#000;color:#f4f4f4}[data-theme="dark"] .pg-detail__bar{background:#000;border-bottom-color:#262626}.mosaic{display:grid;grid-template-columns:repeat(var(--mosaic-cols,6),1fr);gap:1px;background:var(--c-line);border-bottom:1px solid var(--c-line)}.tile{position:relative;aspect-ratio:1;background:var(--c-bg);overflow:hidden;cursor:pointer;display:none;opacity:0;transform:translateY(12px);transition:opacity 500ms ease,transform 500ms ease;transition-delay:var(--reveal-delay,0)}.tile[data-visible="true"]{opacity:1;transform:none}.tile:nth-child(-n+48){display:block}@media(min-width:48rem){.mosaic{--mosaic-cols:8}.tile:nth-child(-n+64){display:block}}@media(min-width:64rem){.mosaic{--mosaic-cols:10}.tile:nth-child(-n+80){display:block}}@media(min-width:80rem){.mosaic{--mosaic-cols:12}.tile:nth-child(-n+96){display:block}}.tile img{width:100%;height:100%;object-fit:cover;transition:transform 600ms cubic-bezier(0.2,0.8,0.2,1),filter 300ms}
+.tile:hover img{transform:scale(1.08);filter:contrast(1.1) saturate(0.9)}.tile__label{position:absolute;inset:auto 0 0 0;padding:.5rem;font-family:var(--ff-mono);font-size:.625rem;text-transform:uppercase;letter-spacing:.05em;color:#f5f5f0;background:linear-gradient(to top,oklch(15% 0 0 / .85),transparent);opacity:0;transition:opacity 200ms;display:flex;justify-content:space-between;pointer-events:none}.tile:hover .tile__label{opacity:1}@media(max-width:47.99rem){.tile__label{display:none}}@media(prefers-reduced-motion:reduce){.tile{transition:none;opacity:1;transform:none}}.pg-detail{position:fixed;inset:0;z-index:9998;background:oklch(96% .005 90);color:oklch(15% 0 0);font-family:"Archivo",ui-sans-serif,system-ui,sans-serif;overflow-y:auto;opacity:0;visibility:hidden;transition:opacity 300ms ease}.pg-detail[data-open="true"]{opacity:1;visibility:visible}.pg-detail__bar{position:sticky;top:0;display:flex;justify-content:space-between;align-items:center;padding:1rem 24px;font-family:"JetBrains Mono",monospace;font-size:.75rem;text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid #171717;background:oklch(96% .005 90)}.pg-detail__close{font:inherit;background:0;border:0;cursor:pointer;text-transform:uppercase}.pg-detail__close:hover{color:oklch(70% .22 35)}.pg-detail__img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block}.pg-detail__body{padding:2rem 24px 4rem;display:grid;gap:1.5rem;max-width:70ch}.pg-detail__title{font-family:"Archivo Black";font-size:clamp(1.8rem,5vw,3.5rem);line-height:.95;letter-spacing:-0.03em;text-transform:uppercase;margin:0}.pg-detail__meta{display:flex;flex-wrap:wrap;gap:1.5rem;font-family:"JetBrains Mono",monospace;font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;opacity:.7}.pg-detail__brief{font-size:1.05rem;line-height:1.55;margin:0}#publications{background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}#publications .sec-head{--sec-line:var(--line)}#publications .sec-head__num,#publications .sec-head__count{color:var(--muted)}#publications .sec-head__title{font-family:"Archivo Black",ui-sans-serif,system-ui,sans-serif}.pubs-list{list-style:none;margin:0;padding:0}.pub-item{border-bottom:1px solid var(--line)}.pub-row{display:grid;grid-template-columns:1fr auto;align-items:center;gap:1rem;padding:1.4rem 24px}.pub-venue{font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:.35rem}.pub-title{font-size:clamp(1rem,2.2vw,1.4rem);font-weight:500;line-height:1.25;letter-spacing:-0.01em}.pub-actions{display:flex;align-items:center;gap:.5rem}.pub-btn{font-size:.7rem;text-transform:uppercase;letter-spacing:.05em;padding:.4rem .7rem;border:1px solid var(--line);border-radius:999px;color:var(--fg);background:transparent;text-decoration:none;white-space:nowrap;transition:background-color .2s,border-color .2s,opacity .2s}.pub-btn:hover{background-color:color-mix(in srgb,var(--fg) 8%,transparent);border-color:color-mix(in srgb,var(--fg) 35%,var(--line))}.pub-toggle{width:2.2rem;height:2.2rem;flex-shrink:0;border:1px solid var(--line);border-radius:50%;background:transparent;color:var(--fg);cursor:pointer;font-size:1.1rem;line-height:1;display:inline-flex;align-items:center;justify-content:center;transition:transform .3s cubic-bezier(0.2,0.8,0.2,1),background-color .2s}.pub-toggle:hover{background-color:color-mix(in srgb,var(--fg) 8%,transparent)}.pub-item[data-open="true"] .pub-toggle{transform:rotate(45deg)}.pub-panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows 400ms cubic-bezier(0.2,0.8,0.2,1)}.pub-item[data-open="true"] .pub-panel{grid-template-rows:1fr}.pub-panel__inner{overflow:hidden;min-height:0}.pub-abstract{margin:0;padding:0 24px 1.6rem;font-size:.95rem;line-height:1.55;color:var(--fg);max-width:75ch}.sec-foot{padding:3rem 24px;font-size:.75rem;text-transform:uppercase;letter-spacing:.05em;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;opacity:.7;background:var(--c-bg);color:var(--c-fg);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;border-top:1px solid var(--c-line)}@media(max-width:720px){.pub-row{grid-template-columns:1fr}.pub-actions{justify-content:flex-start}}</style> <header class="folio-header" id="folio-header"> <div class="folio-top"> <div class="brand"> <img class="brand-logo" src="/assets/img/favicon.png" alt="" aria-hidden="true"> <span>Songeun<sup>©</sup></span> </div> <svg class="folio-mark" viewbox="0 0 512 512" fill="none" stroke="currentColor" stroke-width="24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M104 104 C180 150 332 150 408 104 C362 180 362 332 408 408 C332 362 180 362 104 408 C150 332 150 180 104 104 Z"></path> </svg> <ul class="folio-socials"> <li> <a target="_blank" rel="noopener noreferrer" href="https://github.com/bigeco" aria-label="GitHub (opens in new tab)"> <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewbox="0 0 24 24"> <path d="M0 0h24v24H0z" fill="none"></path><path fill="currentColor" d="M16.974 2.31c.696-.237 1.69-.62 2.279.032c.4.444.5 1.188.571 1.755c.08.634.099 1.462-.111 2.282C20.516 7.415 21 8.653 21 10c0 2.042-1.106 3.814-2.743 5.042a9.5 9.5 0 0 1-2.592 1.354c.215.491.335 1.033.335 1.604v3a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-.995c-.955.117-1.756.017-2.438-.272c-.711-.302-1.208-.77-1.58-1.218a10 10 0 0 1-.481-.638c-.145-.206-.255-.367-.37-.516c-.234-.302-.363-.385-.447-.413a1 1 0 0 1 .632-1.897c.666.222 1.1.702 1.397 1.087c.15.195.298.409.423.586c.132.188.254.356.382.51c.253.302.506.522.826.657c.314.134.776.22 1.5.12L8 17.978a4 4 0 0 1 .334-1.582a9.5 9.5 0 0 1-2.59-1.354C4.105 13.815 3 12.043 3 10c0-1.346.483-2.583 1.284-3.62c-.21-.82-.192-1.647-.112-2.282c.074-.59.155-1.295.571-1.757c.59-.653 1.584-.268 2.28-.03c.619.21 1.384.544 2.125 1.044A11.4 11.4 0 0 1 12 3.001c.993 0 1.951.124 2.849.355a9 9 0 0 1 2.125-1.046"></path> </svg> </a> </li> <li> <a target="_blank" rel="noopener noreferrer" href="#" aria-label="LinkedIn (opens in new tab)"> <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewbox="0 0 24 24"> <path d="M0 0h24v24H0z" fill="none"></path><path fill="currentColor" d="M6.94 5a2 2 0 1 1-4-.002a2 2 0 0 1 4 .002M7 8.48H3V21h4zm6.32 0H9.34V21h3.94v-6.57c0-3.66 4.77-4 4.77 0V21H22v-7.93c0-6.17-7.06-5.94-8.72-2.91z"></path> </svg> </a> </li> <li> <a target="_blank" rel="noopener noreferrer" href="#" aria-label="Google Scholar (opens in new tab)"> <svg xmlns="http://www.w3.org/2000/svg" width="0.75em" height="1em" viewbox="0 0 384 512"> <path d="M0 0h384v512H0z" fill="none"></path><path fill="currentColor" d="M343.759 106.662V79.43L363.524 64h-213.89L20.476 176.274h85.656a82 82 0 0 0-.219 6.225c0 20.845 7.22 38.087 21.672 51.861c14.453 13.797 32.252 20.648 53.327 20.648c4.923 0 9.75-.368 14.438-1.024c-2.907 6.5-4.374 12.523-4.374 18.142c0 9.875 4.499 20.43 13.467 31.642c-39.234 2.67-68.061 9.732-86.437 21.163c-10.531 6.5-19 14.704-25.39 24.531c-6.391 9.9-9.578 20.515-9.578 31.962c0 9.648 2.062 18.336 6.219 26.062c4.156 7.726 9.578 14.07 16.312 18.984c6.718 4.968 14.469 9.101 23.219 12.469c8.734 3.344 17.406 5.718 26.061 7.062A167 167 0 0 0 180.555 448c13.469 0 26.953-1.734 40.547-5.187c13.562-3.485 26.28-8.642 38.171-15.493c11.86-6.805 21.515-16.086 28.922-27.718c7.39-11.68 11.094-24.805 11.094-39.336c0-11.016-2.25-21.039-6.75-30.14c-4.468-9.073-9.938-16.542-16.452-22.345c-6.501-5.813-13-11.155-19.516-15.968c-6.5-4.845-12-9.75-16.468-14.813c-4.485-5.046-6.735-10.054-6.735-14.984c0-4.921 1.734-9.672 5.216-14.265c3.455-4.61 7.674-9.048 12.61-13.306c4.937-4.25 9.875-8.968 14.796-14.133c4.922-5.147 9.141-11.827 12.61-20.008c3.485-8.18 5.203-17.445 5.203-27.757c0-13.453-2.547-24.46-7.547-33.314c-.594-1.022-1.218-1.803-1.875-3.022l56.907-46.672v17.119c-7.393.93-6.624 5.345-6.624 10.635V245.96c0 5.958 4.875 10.834 10.834 10.834h3.989c5.958 0 10.833-4.875 10.833-10.834V117.293c0-5.277.778-9.688-6.561-10.63m-107.36 222.48c1.14.75 3.704 2.78 7.718 6.038c4.05 3.243 6.797 5.695 8.266 7.414a444 444 0 0 1 6.376 7.547c2.813 3.375 4.718 6.304 5.718 8.734q1.5 3.717 3.047 8.946a38.3 38.3 0 0 1 1.485 10.562c0 17.048-6.564 29.68-19.656 37.859c-13.125 8.18-28.767 12.274-46.938 12.274c-9.187 0-18.203-1.093-27.063-3.196c-8.843-2.116-17.311-5.336-25.39-9.601c-8.078-4.258-14.577-10.204-19.5-17.797c-4.938-7.64-7.407-16.415-7.407-26.25c0-10.32 2.797-19.29 8.422-26.906c5.594-7.625 12.938-13.391 22.032-17.315c9.063-3.946 18.25-6.742 27.562-8.398a158 158 0 0 1 28.438-2.555c4.47 0 7.936.25 10.405.696c.455.219 3.032 2.07 7.735 5.563c4.704 3.462 7.625 5.595 8.75 6.384zm-3.359-100.579c-7.406 8.86-17.734 13.288-30.953 13.288c-11.86 0-22.298-4.764-31.266-14.312c-9-9.523-15.422-20.328-19.344-32.43c-3.937-12.109-5.906-23.984-5.906-35.648q.002-20.54 10.781-34.976c7.187-9.65 17.5-14.485 30.938-14.485c11.875 0 22.374 5.038 31.437 15.157c9.094 10.085 15.61 21.413 19.517 33.968c3.922 12.54 5.873 24.53 5.873 35.984c0 13.446-3.702 24.61-11.076 33.454z"></path> </svg> </a> </li> <li> <a target="_blank" rel="noopener noreferrer" href="#" aria-label="YouTube (opens in new tab)"> <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewbox="0 0 24 24"> <path d="M0 0h24v24H0z" fill="none"></path><path fill="currentColor" d="m10 15l5.19-3L10 9zm11.56-7.83c.13.47.22 1.1.28 1.9c.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83c-.25.9-.83 1.48-1.73 1.73c-.47.13-1.33.22-2.65.28c-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44c-.9-.25-1.48-.83-1.73-1.73c-.13-.47-.22-1.1-.28-1.9c-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83c.25-.9.83-1.48 1.73-1.73c.47-.13 1.33-.22 2.65-.28c1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44c.9.25 1.48.83 1.73 1.73"></path> </svg> </a> </li> </ul> </div> </header> <div id="folio-app" class="folio-home"> <div class="folio-hero"> <span class="hero-name"><span class="script">Songeun</span> <span class="bold">Lee</span></span> </div> <nav class="folio-nav"> <a href="/about/"><span class="num">01</span>About</a> <a href="/blog/"><span class="num">02</span>Blog</a> <a href="#publications"><span class="num">03</span>Publications</a> <a href="#playground"><span class="num">04</span>Playground</a> <a href="mailto:"><span class="num">05</span>Contact</a> <span class="copy">©2026</span> </nav> <div class="folio-foot"> <p class="blurb">Exploring AI, video generation, and world models</p> <img class="folio-illus" src="/assets/img/mouse_drawing.svg" alt="" aria-hidden="true"> <p class="blurb">Driven by curiosity to understand the world and build what's next</p> </div> </div> <button id="folio-glass-toggle" class="folio-glass" type="button" aria-label="Toggle liquid glass" title="Liquid Glass on/off"> <svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"></path> </svg> <span class="folio-glass__off" aria-hidden="true"></span> </button> <button id="folio-theme-toggle" class="folio-theme" type="button" aria-label="Toggle dark mode" title="Toggle dark / light"> <svg class="icon-moon" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"></path> </svg> <svg class="icon-sun" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4 -1.4M17.7 6.3l1.4 -1.4"></path> </svg> </button> <section id="publications"> <div class="sec-head"> <div class="sec-head__num">[03]</div> <h2 class="sec-head__title">Publications</h2> <div class="sec-head__count"> 1 Paper </div> </div> <ul class="pubs-list"> <li class="pub-item" data-open="false"> <div class="pub-row"> <div class="pub-row__main"> <div class="pub-venue">EMNLP 2026 (under review)</div> <div class="pub-title">A Tree-based RAG Framework for Evidence-Intensive QA via Adaptive Planning and Topology-Aware Evidence Gathering</div> </div> <div class="pub-actions"> <a class="pub-btn" href="#" target="_blank" rel="noopener noreferrer">PDF</a> <a class="pub-btn" href="#" target="_blank" rel="noopener noreferrer">arXiv</a> <button class="pub-toggle" type="button" aria-expanded="false" aria-label="Toggle abstract">+</button> </div> </div> <div class="pub-panel"> <div class="pub-panel__inner"> <p class="pub-abstract">Abstract — 여기에 논문 초록을 넣으세요. (PDF/arXiv 버튼의 href도 실제 링크로 교체하세요.)</p> </div> </div> </li> </ul> </section> <section id="playground"> <div class="sec-head"> <div class="sec-head__num">[04]</div> <h2 class="sec-head__title">Playground</h2> <div class="sec-head__count" id="pg-count">— Items</div> </div> <div class="mosaic" id="mosaic" role="list"></div> <div class="sec-foot"> <span>Songeun Lee</span> </div> </section> <div class="pg-detail" id="pg-detail" data-open="false" aria-hidden="true" role="dialog" aria-modal="true"> <div class="pg-detail__bar"> <span id="pg-detail-crumb">№000</span> <button class="pg-detail__close" id="pg-detail-close" type="button">Close ✕</button> </div> <img class="pg-detail__img" id="pg-detail-img" src="" alt=""> <div class="pg-detail__body"> <h2 class="pg-detail__title" id="pg-detail-title"></h2> <div class="pg-detail__meta"> <span id="pg-detail-client"></span><span id="pg-detail-year"></span><span id="pg-detail-role"></span> </div> <p class="pg-detail__brief" id="pg-detail-brief"></p> </div> </div> <script>
+  (function () {
+    var btn = document.getElementById("folio-theme-toggle");
+    if (!btn) return;
+
+    function currentTheme() {
+      return document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
+    }
+
+    btn.addEventListener("click", function () {
+      var next = currentTheme() === "dark" ? "light" : "dark";
+
+      // al-folio 전역 함수가 있으면 그대로 사용 → 다른 페이지와 완전 동기화
+      if (typeof setThemeSetting === "function") {
+        setThemeSetting(next);
+      } else {
+        // 폴백: 직접 적용
+        try { localStorage.setItem("theme", next); } catch (e) {}
+        document.documentElement.setAttribute("data-theme-setting", next);
+        document.documentElement.setAttribute("data-theme", next);
+      }
+
+      // Liquid Glass 효과에 테마 변경을 알림(다크=효과 제거 / 라이트=새 색으로 재생성)
+      window.dispatchEvent(new Event("folio:themechange"));
+    });
+
+    // 유리 on/off 버튼 → 모듈로 이벤트 전달
+    var gbtn = document.getElementById("folio-glass-toggle");
+    if (gbtn) {
+      gbtn.addEventListener("click", function () {
+        window.dispatchEvent(new Event("folio:glasstoggle"));
+      });
+    }
+
+    // 고정 헤더: 아래로 스크롤하면 숨기고, 위로 스크롤하면 표시 (Google Labs 스타일)
+    var header = document.getElementById("folio-header");
+    if (header) {
+      var lastY = window.scrollY || 0;
+      var ticking = false;
+      function onHeaderScroll() {
+        var y = window.scrollY || document.documentElement.scrollTop || 0;
+        if (y < 80) {
+          header.dataset.hidden = "false"; // 최상단 근처에서는 항상 표시
+        } else if (y > lastY + 6) {
+          header.dataset.hidden = "true";  // 아래로 스크롤 → 숨김
+        } else if (y < lastY - 6) {
+          header.dataset.hidden = "false"; // 위로 스크롤 → 표시
+        }
+        lastY = y;
+        ticking = false;
+      }
+      window.addEventListener("scroll", function () {
+        if (!ticking) { window.requestAnimationFrame(onHeaderScroll); ticking = true; }
+      }, { passive: true });
+    }
+  })();
+</script> <script id="playground-data" type="application/json">
+  [{"title":"Counterpoint","year":2026,"client":"Atelier Borel","role":"Lead Designer","thumbnail":"https://images.unsplash.com/photo-1609605348579-3123e3d40eb8?w=600\u0026h=600\u0026fit=crop\u0026q=70\u0026auto=format","image":"https://images.unsplash.com/photo-1609605348579-3123e3d40eb8?w=1600\u0026h=900\u0026fit=crop\u0026q=75\u0026auto=format","brief":"프로젝트의 배경, 접근 방식, 결과에 대한 설명을 여기에 입력하세요."},{"title":"Field Notes","year":2025,"client":"Maison Klein","role":"Art Direction","thumbnail":"https://images.unsplash.com/photo-1533226458520-6f71cffeaa6a?w=600\u0026h=600\u0026fit=crop\u0026q=70\u0026auto=format","image":"https://images.unsplash.com/photo-1533226458520-6f71cffeaa6a?w=1600\u0026h=900\u0026fit=crop\u0026q=75\u0026auto=format","brief":"프로젝트의 배경, 접근 방식, 결과에 대한 설명을 여기에 입력하세요."},{"title":"Minor Index","year":2025,"client":"Volume Zero","role":"Type \u0026 Layout","thumbnail":"https://images.unsplash.com/photo-1617050318658-a9a3175e34cb?w=600\u0026h=600\u0026fit=crop\u0026q=70\u0026auto=format","image":"https://images.unsplash.com/photo-1617050318658-a9a3175e34cb?w=1600\u0026h=900\u0026fit=crop\u0026q=75\u0026auto=format","brief":"프로젝트의 배경, 접근 방식, 결과에 대한 설명을 여기에 입력하세요."},{"title":"Long Form","year":2024,"client":"Studio Forme","role":"Creative Direction","thumbnail":"https://images.unsplash.com/photo-1461958508236-9a742665a0d5?w=600\u0026h=600\u0026fit=crop\u0026q=70\u0026auto=format","image":"https://images.unsplash.com/photo-1461958508236-9a742665a0d5?w=1600\u0026h=900\u0026fit=crop\u0026q=75\u0026auto=format","brief":"프로젝트의 배경, 접근 방식, 결과에 대한 설명을 여기에 입력하세요."},{"title":"Working Title","year":2024,"client":"Index Magazine","role":"Lead Designer","thumbnail":"https://images.unsplash.com/photo-1596299786007-9974099be52b?w=600\u0026h=600\u0026fit=crop\u0026q=70\u0026auto=format","image":"https://images.unsplash.com/photo-1596299786007-9974099be52b?w=1600\u0026h=900\u0026fit=crop\u0026q=75\u0026auto=format","brief":"프로젝트의 배경, 접근 방식, 결과에 대한 설명을 여기에 입력하세요."},{"title":"Volume One","year":2023,"client":"Office of Things","role":"Art Direction","thumbnail":"https://images.unsplash.com/photo-1581080247486-57989c1f14ab?w=600\u0026h=600\u0026fit=crop\u0026q=70\u0026auto=format","image":"https://images.unsplash.com/photo-1581080247486-57989c1f14ab?w=1600\u0026h=900\u0026fit=crop\u0026q=75\u0026auto=format","brief":"프로젝트의 배경, 접근 방식, 결과에 대한 설명을 여기에 입력하세요."}]
+</script> <script>
+  (function () {
+    /* ---------- Playground 모자이크 ---------- */
+    const dataNode = document.getElementById("playground-data");
+    let data = [];
+    try {
+      data = JSON.parse(dataNode ? dataNode.textContent : "[]");
+    } catch (error) {
+      console.warn("[folio] Playground 데이터를 읽지 못했습니다.", error);
+    }
+
+    const mosaic = document.getElementById("mosaic");
+    const count = document.getElementById("pg-count");
+    if (mosaic) {
+      count && (count.textContent = data.length + (data.length === 1 ? " Item" : " Items"));
+      const tiles = [];
+      data.forEach((p, i) => {
+        p.num = String(i + 1).padStart(3, "0");
+        const a = document.createElement("a");
+        a.className = "tile";
+        a.href = "#";
+        a.setAttribute("role", "listitem");
+
+        const image = document.createElement("img");
+        image.src = p.thumbnail || p.image;
+        image.alt = p.title || "Playground item";
+        image.loading = i < 12 ? "eager" : "lazy";
+        image.decoding = "async";
+
+        const label = document.createElement("div");
+        label.className = "tile__label";
+        const number = document.createElement("span");
+        number.textContent = "[" + p.num + "]";
+        const year = document.createElement("span");
+        year.textContent = p.year || "";
+        label.append(number, year);
+        a.append(image, label);
+
+        a.addEventListener("click", (e) => { e.preventDefault(); openDetail(i); });
+        mosaic.appendChild(a);
+        tiles.push(a);
+      });
+
+      const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (reduce) {
+        tiles.forEach((t) => (t.dataset.visible = "true"));
+      } else {
+        let waveStart = performance.now(), waveCount = 0;
+        const io = new IntersectionObserver((entries) => {
+          const now = performance.now();
+          if (now - waveStart > 400) { waveStart = now; waveCount = 0; }
+          entries.forEach((en) => {
+            if (en.isIntersecting) {
+              en.target.style.setProperty("--reveal-delay", Math.min(waveCount * 35, 600) + "ms");
+              en.target.dataset.visible = "true";
+              waveCount++;
+              io.unobserve(en.target);
+            }
+          });
+        }, { rootMargin: "0px 0px -10% 0px", threshold: 0.05 });
+        tiles.forEach((t) => io.observe(t));
+      }
+    }
+
+    /* ---------- 상세 모달 ---------- */
+    const detail = document.getElementById("pg-detail");
+    const dImg = document.getElementById("pg-detail-img");
+    const dTitle = document.getElementById("pg-detail-title");
+    const dCrumb = document.getElementById("pg-detail-crumb");
+    const dClient = document.getElementById("pg-detail-client");
+    const dYear = document.getElementById("pg-detail-year");
+    const dRole = document.getElementById("pg-detail-role");
+    const dBrief = document.getElementById("pg-detail-brief");
+    const dClose = document.getElementById("pg-detail-close");
+
+    function openDetail(i) {
+      const p = data[i];
+      if (!p || !detail) return;
+      dImg.src = p.image || p.thumbnail; dImg.alt = p.title || "Playground item";
+      dTitle.textContent = p.title || "";
+      dCrumb.textContent = "№" + p.num;
+      dClient.textContent = p.client || "";
+      dYear.textContent = p.year || "";
+      dRole.textContent = p.role || "";
+      dBrief.textContent = p.brief || "";
+      detail.dataset.open = "true";
+      detail.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+      detail.scrollTop = 0;
+    }
+    function closeDetail() {
+      if (!detail) return;
+      detail.dataset.open = "false";
+      detail.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+    }
+    dClose && dClose.addEventListener("click", closeDetail);
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape" && detail && detail.dataset.open === "true") closeDetail(); });
+
+    /* ---------- Publications 아코디언 ---------- */
+    const items = document.querySelectorAll("#publications .pub-item");
+    items.forEach((item) => {
+      const toggle = item.querySelector(".pub-toggle");
+      toggle.addEventListener("click", () => {
+        const willOpen = item.dataset.open !== "true";
+        items.forEach((o) => {
+          if (o !== item) {
+            o.dataset.open = "false";
+            const t = o.querySelector(".pub-toggle");
+            t.setAttribute("aria-expanded", "false"); t.textContent = "+";
+          }
+        });
+        item.dataset.open = String(willOpen);
+        toggle.setAttribute("aria-expanded", String(willOpen));
+        toggle.textContent = willOpen ? "−" : "+";
+      });
+    });
+  })();
+</script> <script type="module">
+  // Liquid glass post-effect — original by Amagi (MIT), https://codepen.io/fand/pen/azmPjqd
+  // VFX-JS — https://amagi.dev/vfx-js/
+
+  const PARAMS = {
+    sphereR: 0.12,
+    bubbleCount: 8,
+    bubbleRadiusMin: 0.03,
+    bubbleRadiusMax: 0.07,
+    bubbleSpeed: 0.7,
+    mouseSmoothing: 0.05,
+  };
+
+  // ── 효과를 켤지 판단하는 가드 (성능/접근성/호환성) ──
+  const prefersReduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const isSmall = matchMedia("(max-width: 820px)").matches; // 모바일에선 끔
+  function hasWebGL2() {
+    try { return !!document.createElement("canvas").getContext("webgl2"); }
+    catch (e) { return false; }
+  }
+  const enableGlass = !prefersReduced && !isSmall && hasWebGL2();
+
+  // 유리를 지원하지 않으면 유리 on/off 버튼을 숨김
+  if (!enableGlass) {
+    const gb = document.getElementById("folio-glass-toggle");
+    if (gb) gb.style.display = "none";
+  }
+
+  const postEffectShader = `
+    precision highp float;
+    uniform sampler2D src;
+    uniform vec2 resolution;
+    uniform vec2 offset;
+    uniform vec2 mouse;
+    uniform vec2 lag;
+    uniform float time;
+    uniform float clickTime;
+    uniform int clickCount;
+    out vec4 outColor;
+
+    const float SPHERE_R = ${PARAMS.sphereR.toFixed(4)};
+
+    const float DISP = 0.025;
+    const int   DISP_STEPS = 12;
+    const float DISP_LO = 0.0;
+    const float DISP_HI = 1.0;
+
+    const float SCATTER = 0.03;
+
+    const int N_BUBBLES = ${PARAMS.bubbleCount};
+    const float BUBBLE_SMOOTH = 0.025;
+    uniform float bubbleData[${PARAMS.bubbleCount * 4}];
+
+    const vec3 ABSORB = vec3(2.0, 1.2, 1.0) * 3.;
+
+    float smin(float a, float b, float k) {
+      float h = clamp(0.5 + 0.5 * (b - a) / k, 0.0, 1.0);
+      return mix(b, a, h) - k * h * (1.0 - h);
+    }
+
+    vec2 hash22(vec2 p) {
+      vec3 p3 = fract(vec3(p.xyx) * vec3(0.1031, 0.1030, 0.0973));
+      p3 += dot(p3, p3.yzx + 33.33);
+      return fract((p3.xx + p3.yz) * p3.zy) * 2.0 - 1.0;
+    }
+
+    mat2 rot(float t) {
+      float c = cos(t), s = sin(t);
+      return mat2(c, -s, s, c);
+    }
+
+    float sdSphere(vec3 p, float r) { return length(p) - r; }
+
+    float sdBox(vec3 p, vec3 b, float r) {
+      vec3 q = abs(p) - b + r;
+      return length(max(q,0.0)) + min(max(q.x,max(q.y,q.z)),0.0) - r;
+    }
+
+    float sdRing(vec3 p, vec2 r) {
+      float s = length(p.xy) - r.x;
+      return length(vec2(s, p.z)) - r.y;
+    }
+
+    float map(vec3 p, vec3 c) {
+      vec3 q = p - c;
+
+      float tt = clickTime * 5.0;
+      float bounce = exp(-tt) * sin(tt) * 5. + (1. - exp(-tt));
+      float s = bounce * 0.5 + 0.5;
+      q /= s;
+
+      q.xz *= rot(exp(-clickTime*3.0) * 8.);
+
+      vec3 sp = q;
+      sp.y += sin(sp.z * 29. + time * 6.5) * 0.01;
+      sp.z += sin(sp.x * 23. + sp.y * 11. + time * 7.) * 0.01;
+      sp.xy *= rot(time*1.3);
+      sp.xz *= rot(time*1.1);
+
+      float d ;
+      int objType = clickCount % 3;
+      if (objType == 0) {
+        d = sdSphere(sp, SPHERE_R);
+      } else if (objType == 1) {
+        d = sdBox(sp, vec3(SPHERE_R*0.8), 0.01);
+      } else {
+        d = sdRing(sp, vec2(SPHERE_R*1.1, 0.015));
+      }
+
+      for (int i = 0; i < N_BUBBLES; i++) {
+        int b = i * 4;
+        vec3 bPos = vec3(bubbleData[b], bubbleData[b+1], bubbleData[b+2]);
+        float r = bubbleData[b+3];
+        d = smin(d, sdSphere(q - bPos, max(r, 0.001)), BUBBLE_SMOOTH);
+      }
+
+      return d * s;
+    }
+
+    vec3 calcNormal(vec3 p, vec3 c) {
+      vec2 e = vec2(0.001, 0.0);
+      return normalize(vec3(
+        map(p + e.xyy, c) - map(p - e.xyy, c),
+        map(p + e.yxy, c) - map(p - e.yxy, c),
+        map(p + e.yyx, c) - map(p - e.yyx, c)
+      ));
+    }
+
+    vec3 spectrum(float x) {
+      return clamp(vec3(
+        1.5 - abs(4.0 * x - 1.0),
+        1.5 - abs(4.0 * x - 2.0),
+        1.5 - abs(4.0 * x - 3.0)
+      ), 0.0, 1.0);
+    }
+
+    vec4 getSrc(vec2 uv) {
+      vec4 c = texture(src, uv);
+      return mix(vec4(1), c, c.a);
+    }
+
+    void main() {
+      vec2 uv = (gl_FragCoord.xy - offset) / resolution;
+      float aspect = resolution.y / resolution.x;
+
+      vec2 p = (uv - 0.5) * vec2(1.0, aspect);
+      vec2 mp = ((mouse + lag) / resolution - 0.5) * vec2(1.0, aspect);
+
+      vec3 ro = vec3(0.0, 0.0, -2.0);
+      float focal = 2.0;
+      vec3 rd = normalize(vec3(p, focal));
+
+      vec3 c = vec3(mp, 0.0);
+
+      vec3 firstN = vec3(0.0);
+      vec3 lastN = vec3(0.0);
+      int hitCount = 0;
+
+      float thickness = 0.0;
+      float tEntry = 0.0;
+      float t = 0.0;
+      bool inside = false;
+      for (int i = 0; i < 50; i++) {
+        if (t > 10.0) break;
+
+        vec3 pos = ro + rd * t;
+        float d = map(pos, c);
+
+        float step = inside ? -d : d;
+        if (step < 3e-4) {
+          vec3 n = calcNormal(pos, c);
+          if (hitCount == 0) firstN = n;
+          lastN = n;
+          if (!inside) {
+            tEntry = t;
+          } else {
+            thickness += t - tEntry;
+          }
+
+          hitCount++;
+          if (hitCount >= 4) { break; }
+
+          inside = !inside;
+          t += 0.01;
+        } else {
+          t += step;
+        }
+      }
+
+      if (hitCount > 0) {
+        vec2 baseDisp = -(firstN.xy + lastN.xy) * 0.5 * DISP;
+
+        float NdotR = max(dot(firstN, -rd), 0.0);
+        float scatter = pow((1.0 - NdotR), 2.0) * SCATTER;
+
+        vec3 acc = vec3(0.0);
+        vec3 wsum = vec3(0.0);
+        for (int i = 0; i < DISP_STEPS; i++) {
+          float wl = float(i) / float(DISP_STEPS - 1);
+          float k = mix(DISP_LO, DISP_HI, wl) * (1.3 + float(hitCount) * 0.2);
+          vec2 h = hash22(uv * 1000.0 + float(i) * 7.13 + time) * scatter;
+          vec3 w = spectrum(wl);
+          acc += getSrc(uv + baseDisp * k + h).rgb * w;
+          wsum += w;
+        }
+        vec3 col = acc / wsum * 0.99;
+        col -= float(hitCount) * 0.05;
+
+        col += 0.1;
+
+        float fres = pow(1.0 - NdotR, 5.0);
+        col *= 1. + fres;
+
+        float f2 = 1. - pow(NdotR, 3.0);
+        col *= mix(vec3(1), exp(-ABSORB * thickness), f2);
+        col *= 1. + f2;
+
+        vec3 ld = normalize(vec3(0.5, 0.9, -0.3));
+        float spec = pow(max(dot(reflect(-ld, firstN), -rd), 0.0), 200.0);
+        col += spec * 30.;
+
+        ld = normalize(vec3(-0.9, 0.4, -0.3));
+        spec = pow(max(dot(reflect(-ld, firstN), -rd), 0.0), 300.0);
+        col += spec * 3.;
+
+        ld = normalize(vec3(-0.1, -0.9, -0.1));
+        spec = pow(max(dot(reflect(-ld, firstN), -rd), 0.0), 30.0);
+        col += spec * 0.5;
+
+        col = min(col, 1.);
+        col = 1. - abs(col + fres * .5 - 1.);
+
+        outColor = vec4(col, 1.0);
+      } else {
+        outColor = getSrc(uv);
+      }
+    }
+  `;
+
+  // 유리 효과를 다크모드에서도 유지합니다. (라이트에서만 쓰고 싶다면 false 로 바꾸세요)
+  const GLASS_IN_DARK = true;
+  const isDark = () => document.documentElement.getAttribute("data-theme") === "dark";
+
+  if (enableGlass) {
+    window.addEventListener("load", async () => {
+      let VFX;
+      try {
+        ({ VFX } = await import("https://esm.sh/@vfx-js/core@0.11.1"));
+      } catch (e) {
+        console.warn("[folio] VFX-JS 로드 실패, 일반 화면으로 표시합니다.", e);
+        return;
+      }
+
+      // 큰 필기체 폰트가 텍스처에 담기도록 폰트 로딩을 기다림
+      if (document.fonts && document.fonts.ready) {
+        try { await document.fonts.ready; } catch (e) {}
+      }
+
+      const app = document.getElementById("folio-app");
+      if (!app) return;
+
+      const N = PARAMS.bubbleCount;
+      const fract = (x) => x - Math.floor(x);
+      const rot2d = (x, y, t) => {
+        const c = Math.cos(t), s = Math.sin(t);
+        return [x * c - y * s, x * s + y * c];
+      };
+
+      const p0 = { x: 0, y: 0 };
+      const p1 = { x: 0, y: 0 };
+      const p2 = { x: 0, y: 0 };
+      let hasMouse = false;
+      let centerBlend = 1.0;
+      window.addEventListener("pointermove", (e) => {
+        p0.x = e.clientX;
+        p0.y = window.innerHeight - e.clientY;
+        hasMouse = true;
+      });
+
+      let lastClickTime = performance.now() / 1000;
+      let clickCount = 0;
+      window.addEventListener("pointerdown", () => {
+        lastClickTime = performance.now() / 1000;
+        clickCount++;
+      });
+
+      const bubbles = new Float32Array(N * 4);
+      const t0 = performance.now() / 1000;
+
+      function tick() {
+        const time = performance.now() / 1000 - t0;
+        const sm = PARAMS.mouseSmoothing;
+        p1.x += (p0.x - p1.x) * sm;
+        p1.y += (p0.y - p1.y) * sm;
+        p2.x += (p1.x - p2.x) * sm;
+        p2.y += (p1.y - p2.y) * sm;
+
+        if (hasMouse) { centerBlend *= 0.95; }
+
+        for (let i = 0; i < N; i++) {
+          const life = fract(time * PARAMS.bubbleSpeed + i / N);
+          const orbitR = PARAMS.sphereR * (0.3 + life * 0.8);
+          const orbitAngle = time * (0.8 + fract(i * 0.618) * 0.7) + i * 1.256;
+
+          let bx = Math.cos(orbitAngle) * orbitR;
+          let by = 0;
+          let bz = Math.sin(orbitAngle) * orbitR;
+
+          [bx, by] = rot2d(bx, by, i * 2.3);
+          [by, bz] = rot2d(by, bz, i * 1.8);
+
+          by += life * 0.1;
+          bx += Math.sin(time * 2.7 + i * 4.1) * 0.008 * life;
+          bz += Math.cos(time * 3.1 + i * 3.7) * 0.008 * life;
+
+          const w = window.innerWidth, h = window.innerHeight;
+          bx += ((p2.x - p1.x) / w) * (h / w);
+          by += (p2.y - p1.y) / h;
+
+          const range = PARAMS.bubbleRadiusMax - PARAMS.bubbleRadiusMin;
+          const maxR = PARAMS.bubbleRadiusMin + range * fract(i * 0.618);
+
+          const j = i * 4;
+          bubbles[j] = bx;
+          bubbles[j + 1] = by;
+          bubbles[j + 2] = bz;
+          bubbles[j + 3] = maxR * Math.sin(life * Math.PI);
+        }
+        requestAnimationFrame(tick);
+      }
+      tick();
+
+      // ── 유리 인스턴스 생성/파괴 ──
+      let vfx = null;
+
+      async function buildGlass() {
+        if (vfx) return;
+        const inst = new VFX({
+          zIndex: 1,
+          pixelRatio: Math.min((window.devicePixelRatio || 1) * 2, 3), // 슈퍼샘플링 → 텍스트 선명도 개선
+          postEffect: {
+            shader: postEffectShader,
+            uniforms: {
+              lag: () => {
+                const lx = (p1.x - p0.x) * devicePixelRatio;
+                const ly = (p1.y - p0.y) * devicePixelRatio;
+                const cx = (window.innerWidth / 2) * devicePixelRatio * centerBlend;
+                const cy = (window.innerHeight / 2) * devicePixelRatio * centerBlend;
+                return [cx + lx, cy + ly];
+              },
+              clickTime: () => performance.now() / 1000 - lastClickTime,
+              clickCount: () => clickCount,
+              bubbleData: () => bubbles,
+            },
+          },
+        });
+        try {
+          await inst.addHTML(app, { shader: "none" });
+          inst.play();
+          vfx = inst;
+        } catch (e) {
+          console.warn("[folio] 유리 효과 생성 실패", e);
+          try { inst.destroy(); } catch (_) {}
+        }
+      }
+
+      function teardownGlass() {
+        if (!vfx) return;
+        try { vfx.destroy(); } catch (e) {}  // 캔버스 제거 + 원본 DOM 복원
+        vfx = null;
+        // 혹시 원본 요소가 숨겨진 채 남지 않도록 강제 복원
+        app.style.opacity = "";
+        app.style.visibility = "";
+      }
+
+      // 현재 테마에 맞춰 유리 표시 여부 결정
+      function applyGlassForTheme() {
+        if (GLASS_IN_DARK || !isDark()) {
+          buildGlass();          // 라이트: 유리 켜기 (매번 새 색으로 캡처)
+        } else {
+          teardownGlass();       // 다크: 유리 제거 → 순수한 색 반전만 표시(진짜 다크모드)
+        }
+      }
+
+      // 유리 상태(버튼 on/off, 스크롤 위치)
+      let glassEnabled = true;
+      let scrolledAway = false;
+      const atTop = () => (window.scrollY || document.documentElement.scrollTop || 0) <= 4;
+
+      applyGlassForTheme();
+
+      // 낮/밤 전환 시
+      let rebuildTimer = null;
+      window.addEventListener("folio:themechange", () => {
+        // 유리가 꺼져 있거나(버튼), 스크롤 상태거나, 다크-끄기 설정이면 표시 안 함
+        const shouldShow = glassEnabled && atTop() && (GLASS_IN_DARK || !isDark());
+        if (!shouldShow) { teardownGlass(); return; }
+        if (!vfx) { buildGlass(); return; }           // 유리가 없던 상태면 새로 생성
+
+        // 색이 즉시 확정되므로(전환 애니메이션 제거됨) 다음 프레임에 제자리 재캡처
+        requestAnimationFrame(() => {
+          try {
+            vfx.update(app); // 캔버스를 유지한 채 새 색으로 텍스처만 갱신
+          } catch (e) {
+            // 드물게 update 미지원 시 폴백: 재생성
+            teardownGlass();
+            clearTimeout(rebuildTimer);
+            rebuildTimer = setTimeout(buildGlass, 60);
+          }
+        });
+      });
+
+      // 소셜 아이콘 호버 시: 유리 텍스처를 갱신해 '색 진해짐'이 유리 너머로도 보이게
+      const socials = app.querySelector(".folio-socials");
+      if (socials) {
+        const reglass = () => {
+          try { vfx && vfx.update(app); } catch (e) {}
+          // 0.2s 호버 트랜지션이 끝난 최종 상태도 캡처
+          setTimeout(() => { try { vfx && vfx.update(app); } catch (e) {} }, 240);
+        };
+        socials.addEventListener("pointerover", reglass);
+        socials.addEventListener("pointerout", reglass);
+        socials.addEventListener("focusin", reglass);
+        socials.addEventListener("focusout", reglass);
+      }
+
+      // 유리 on/off 버튼 + 스크롤 시 캔버스 제거(흰 화면 방지) / 최상단 복원
+      window.addEventListener("folio:glasstoggle", () => {
+        glassEnabled = !glassEnabled;
+        const gb = document.getElementById("folio-glass-toggle");
+        if (gb) gb.dataset.off = String(!glassEnabled);
+        if (!glassEnabled) {
+          teardownGlass();
+        } else if (atTop() && (GLASS_IN_DARK || !isDark())) {
+          buildGlass();
+          scrolledAway = false;
+        } else {
+          scrolledAway = true; // 스크롤 상태면 최상단 복귀 때 생성
+        }
+      });
+
+      // 유리는 첫 화면 전용 효과 → 스크롤하면 캔버스를 제거해 아래 섹션을 덮지 않게
+      window.addEventListener("scroll", () => {
+        if (!glassEnabled) return;
+        const y = window.scrollY || document.documentElement.scrollTop || 0;
+        if (y > 40 && !scrolledAway) {
+          scrolledAway = true;
+          teardownGlass();
+        } else if (y <= 4 && scrolledAway) {
+          scrolledAway = false;
+          if (GLASS_IN_DARK || !isDark()) buildGlass();
+        }
+      }, { passive: true });
+    });
+  }
+</script> </div> <footer class="fixed-bottom" role="contentinfo"> <div class="container mt-0"> © Copyright 2026 Songeun Lee. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="/assets/js/bootstrap.bundle.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/assets/js/masonry.js?v=a0db7e5d5c70cc3252b3138b0c91dcaf" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js?v=85ddb88934d28b74e78031fd54cf8308"></script> <script src="/assets/js/no_defer.js?v=2781658a0a2b13ed609542042a859126"></script> <script defer src="/assets/js/common.js?v=c15de51d4bb57887caa2c21988d97279"></script> <script defer src="/assets/js/copy_code.js?v=c8a01c11a92744d44b093fc3bda915df" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?v=d9f17b6adc2311cbabd747f4538bb15f"></script> <script async src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script> <script async src="https://badge.dimensions.ai/badge.js"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/js/mathjax-setup.js?v=a5bb4e6a542c546dd929b24b8b236dfd"></script> <script defer src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6" crossorigin="anonymous"></script> <script defer src="/assets/js/progress-bar.js?v=2f30e0e6801ea8f5036fa66e1ab0a71a" type="text/javascript"></script> <script type="module" src="/assets/js/search/ninja-keys.min.js?v=a3446f084dcaecc5f75aa1757d087dcf"></script> <ninja-keys hidebreadcrumbs noautoloadmdicons placeholder="Type to start searching"></ninja-keys> <script src="/assets/js/search-setup.js?v=6c304f7b1992d4b60f7a07956e52f04a"></script> <script src="/assets/js/search-data.js"></script> <script src="/assets/js/shortcut-key.js?v=ccc841c459bfc0e64c1c2b5acd10df02"></script> </body> </html>
