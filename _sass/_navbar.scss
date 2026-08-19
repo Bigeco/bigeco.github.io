@@ -116,42 +116,36 @@
 }
 
 .navbar-toggler {
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0.5rem;
+  border: 0;
+
   .icon-bar {
     display: block;
-    width: 22px;
+    width: 24px;
     height: 2px;
     background-color: var(--global-text-color);
     border-radius: 1px;
-    margin-bottom: 4px;
-    transition: all 0.2s;
+    transition: transform 0.2s ease;
   }
 
   .top-bar {
-    transform: rotate(45deg);
-    transform-origin: 10% 10%;
-  }
-
-  .middle-bar {
-    opacity: 0;
+    transform: translateY(1px) rotate(45deg);
   }
 
   .bottom-bar {
-    transform: rotate(-45deg);
-    transform-origin: 10% 90%;
+    transform: translateY(-1px) rotate(-45deg);
   }
 }
 
 .navbar-toggler.collapsed {
   .top-bar {
-    transform: rotate(0);
-  }
-
-  .middle-bar {
-    opacity: 1;
+    transform: translateY(-4px);
   }
 
   .bottom-bar {
-    transform: rotate(0);
+    transform: translateY(4px);
   }
 }
 
@@ -172,7 +166,7 @@
   }
 }
 
-@media (min-width: 576px) {
+@media (min-width: 1200px) {
   #light-toggle {
     transform: translateY(4px);
   }
