@@ -1,0 +1,253 @@
+/* Compact, light code surfaces, scoped to article content. */
+.minimal-article code,
+.minimal-article pre,
+.minimal-article .d2h-diff-table {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 12px;
+  line-height: 1.65;
+}
+.minimal-article code {
+  color: #344054;
+  background: #f1f3f5;
+  padding: 2px 5px;
+  border-radius: 4px;
+}
+.minimal-article .highlight,
+.minimal-article pre {
+  color: #24292f;
+}
+/* Rouge wraps pre.highlight in another .highlight: only pre paints the surface. */
+.minimal-article div.highlight,
+.minimal-article figure.highlight,
+.minimal-article .code-display-wrapper {
+  background: transparent;
+}
+.minimal-article pre {
+  box-sizing: border-box;
+  max-width: 100%;
+  background: #f6f8fa;
+  background-clip: padding-box;
+}
+.minimal-article pre {
+  padding: 16px 18px;
+  border: 1px solid #e6e9ed;
+  border-radius: 8px;
+  overflow-x: auto;
+  white-space: pre;
+  box-shadow: none;
+}
+.minimal-article .highlight {
+  border-radius: 8px;
+}
+.minimal-article pre code,
+.minimal-article pre pre {
+  color: inherit;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  border-radius: 0;
+}
+.minimal-article .highlight span,
+.minimal-article .diff2html .hljs,
+.minimal-article .diff2html .hljs span {
+  color: #24292f;
+  background: transparent;
+}
+.minimal-article .highlight :is(.c, .c1, .cm, .cp, .cs),
+.minimal-article .diff2html .hljs-comment {
+  color: #6e7781;
+  font-style: normal;
+}
+.minimal-article .highlight :is(.k, .kc, .kd, .kn, .kp, .kr, .kt),
+.minimal-article .diff2html :is(.hljs-keyword, .hljs-type, .hljs-literal) {
+  color: #6f42c1;
+}
+.minimal-article .highlight :is(.s, .s1, .s2, .sb, .sc, .sd, .se, .sh, .si, .sr, .ss),
+.minimal-article .diff2html :is(.hljs-string, .hljs-regexp) {
+  color: #0550ae;
+}
+.minimal-article .highlight :is(.m, .mi, .mf, .mh, .mo, .nb, .no),
+.minimal-article .diff2html :is(.hljs-number, .hljs-built_in) {
+  color: #116466;
+}
+.minimal-article .highlight .gi {
+  background: #e6ffec;
+  color: #164b29;
+}
+.minimal-article .highlight .gd {
+  background: #ffebe9;
+  color: #7f2528;
+}
+.minimal-article .highlight :is(.gh, .gu) {
+  color: #57606a;
+}
+.minimal-article .highlight table td,
+.minimal-article .highlight table th {
+  font-size: inherit;
+}
+.minimal-article .highlight .lineno {
+  color: #6e7781;
+}
+.minimal-article .code-display-wrapper .copy {
+  top: 6px;
+  right: 6px;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #d8dee4;
+  border-radius: 5px;
+  background: #fff;
+  color: #57606a;
+  font-size: 12px;
+  opacity: 0.7;
+  cursor: pointer;
+}
+.minimal-article .code-display-wrapper .copy:hover,
+.minimal-article .code-display-wrapper .copy:focus-visible {
+  opacity: 1;
+  background: #eaeef2;
+}
+.minimal-article .code-display-wrapper > pre {
+  padding-right: 44px;
+}
+.minimal-article .diff2html {
+  margin: 20px 0;
+  color: #24292f;
+}
+.minimal-article .diff2html .d2h-file-wrapper {
+  border-radius: 8px;
+  overflow: hidden;
+}
+.minimal-article .diff2html .d2h-file-header {
+  height: auto;
+  min-height: 36px;
+  padding: 8px 12px;
+  font-family: "Roboto", sans-serif;
+  font-size: 12px;
+}
+.minimal-article .diff2html .d2h-file-name {
+  overflow-wrap: anywhere;
+}
+.minimal-article .diff2html .d2h-file-list-wrapper {
+  font-size: 12px;
+  margin-bottom: 16px;
+}
+.minimal-article .diff2html .d2h-file-list-title {
+  font-size: 13px;
+}
+.minimal-article .diff2html .d2h-diff-table td {
+  font-size: 12px;
+  line-height: 1.65;
+}
+.minimal-article .diff2html :is(.d2h-code-line, .d2h-code-side-line, .d2h-code-line-ctn, .d2h-code-line-prefix) {
+  color: #24292f;
+}
+.minimal-article .diff2html :is(.d2h-code-linenumber, .d2h-code-side-linenumber) {
+  font-size: 11px;
+  color: #6e7781;
+}
+.minimal-article .diff2html :is(ins, del) {
+  text-decoration: none;
+}
+
+.minimal-article .diff2html {
+  --d2h-dark-color: #24292f;
+  --d2h-bg-color: #fff;
+  --d2h-dark-bg-color: #fff;
+  --d2h-border-color: #d8dee4;
+  --d2h-dark-border-color: #d8dee4;
+  --d2h-dim-color: #6e7781;
+  --d2h-dark-dim-color: #6e7781;
+  --d2h-line-border-color: #e6e9ed;
+  --d2h-dark-line-border-color: #e6e9ed;
+  --d2h-file-header-bg-color: #f6f8fa;
+  --d2h-dark-file-header-bg-color: #f6f8fa;
+  --d2h-file-header-border-color: #d8dee4;
+  --d2h-dark-file-header-border-color: #d8dee4;
+  --d2h-empty-placeholder-bg-color: #f6f8fa;
+  --d2h-dark-empty-placeholder-bg-color: #f6f8fa;
+  --d2h-empty-placeholder-border-color: #e6e9ed;
+  --d2h-dark-empty-placeholder-border-color: #e6e9ed;
+  --d2h-selected-color: #ddf4ff;
+  --d2h-dark-selected-color: #ddf4ff;
+  --d2h-ins-bg-color: #e6ffec;
+  --d2h-dark-ins-bg-color: #e6ffec;
+  --d2h-ins-border-color: #aceebb;
+  --d2h-dark-ins-border-color: #aceebb;
+  --d2h-ins-highlight-bg-color: #abf2bc;
+  --d2h-dark-ins-highlight-bg-color: #abf2bc;
+  --d2h-ins-label-color: #1a7f37;
+  --d2h-dark-ins-label-color: #1a7f37;
+  --d2h-del-bg-color: #ffebe9;
+  --d2h-dark-del-bg-color: #ffebe9;
+  --d2h-del-border-color: #ffcecb;
+  --d2h-dark-del-border-color: #ffcecb;
+  --d2h-del-highlight-bg-color: #ffd0ce;
+  --d2h-dark-del-highlight-bg-color: #ffd0ce;
+  --d2h-del-label-color: #cf222e;
+  --d2h-dark-del-label-color: #cf222e;
+  --d2h-change-del-color: #ffebe9;
+  --d2h-dark-change-del-color: #ffebe9;
+  --d2h-change-ins-color: #e6ffec;
+  --d2h-dark-change-ins-color: #e6ffec;
+  --d2h-info-bg-color: #f1f6fc;
+  --d2h-dark-info-bg-color: #f1f6fc;
+  --d2h-info-border-color: #d8dee4;
+  --d2h-dark-info-border-color: #d8dee4;
+  --d2h-change-label-color: #57606a;
+  --d2h-dark-change-label-color: #57606a;
+  --d2h-moved-label-color: #0550ae;
+  --d2h-dark-moved-label-color: #0550ae;
+}
+
+/* Keep Distill's article-wide list/link rules out of diff controls. */
+.minimal-article .diff2html .d2h-file-list > li {
+  padding: 3px 10px;
+  margin: 0;
+  border-bottom: 0;
+  line-height: 1.5;
+}
+.minimal-article .diff2html .d2h-file-list a {
+  border-bottom: 0;
+  text-decoration: none;
+}
+.minimal-article .diff2html .d2h-file-list a:hover {
+  color: #0550ae;
+}
+.minimal-article .diff2html .d2h-tag {
+  align-self: center;
+  padding: 1px 4px;
+  line-height: 1.2;
+  height: auto;
+}
+.minimal-article .diff2html .d2h-file-collapse {
+  border: 0;
+  box-shadow: none;
+  background: transparent;
+  padding: 2px 4px;
+}
+.minimal-article .diff2html .d2h-file-collapse-input {
+  accent-color: #57606a;
+}
+.minimal-article .mermaid .titleText {
+  fill: #000 !important;
+}
+.minimal-article .leaflet-container {
+  overflow: hidden;
+  isolation: isolate;
+}
+.minimal-article .leaflet-tile {
+  max-width: none !important;
+  max-height: none !important;
+}
+.minimal-article .echarts {
+  border-radius: 8px;
+  overflow: hidden;
+  background: #f6f8fa;
+}
+.minimal-article d-appendix {
+  --global-distill-app-color: #404040;
+  --global-hover-color: #0550ae;
+}

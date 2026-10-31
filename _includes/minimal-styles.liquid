@@ -1,0 +1,9 @@
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400&family=La+Belle+Aurore&family=Roboto:wght@300;400;500;600;700&display=swap"
+>
+<link rel="stylesheet" href="{{ '/assets/css/minimal-home.css' | relative_url }}">
+
+{% if page.layout == 'post' or page.layout == 'distill' %}
+  <link rel="stylesheet" href="{{ '/assets/css/minimal-code.css' | relative_url }}">
+{% endif %}

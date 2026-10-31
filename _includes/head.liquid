@@ -6,7 +6,7 @@
 <!-- To customize for your needs, see: https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
 <meta
   http-equiv="Content-Security-Policy"
-  content="default-src 'self'; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self' data: https:; media-src 'self' https:; frame-src 'self' https:; connect-src 'self' https:;"
+  content="default-src 'self'; script-src 'self' 'unsafe-inline' https:{% if page.tikzjax %} 'wasm-unsafe-eval'{% endif %};{% if page.tikzjax %} worker-src 'self' blob:;{% endif %} style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self' data: https:; media-src 'self' https:; frame-src 'self' https:; connect-src 'self' https:;"
 >
 
 <!-- Bootstrap & MDB -->
@@ -97,8 +97,7 @@
   <link
     defer
     rel="stylesheet"
-    href="{{ site.third_party_libraries.leaflet.url.css }}"
-    integrity="{{ site.third_party_libraries.leaflet.integrity.css }}"
+    href="{{ '/assets/css/leaflet.css' | relative_url | bust_file_cache }}"
     crossorigin="anonymous"
   >
 {% endif %}

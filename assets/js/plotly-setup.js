@@ -1,4 +1,4 @@
-let plotlyTheme = determineComputedTheme();
+let plotlyTheme = document.querySelector(".minimal-article") ? "light" : determineComputedTheme();
 /* Create plotly chart as another node and hide the code block, appending the plotly node after it
        this is done to enable retrieving the code again when changing theme between light/dark */
 document.addEventListener("readystatechange", () => {
@@ -46,6 +46,7 @@ document.addEventListener("readystatechange", () => {
         }
       }
 
+      if (chartElement.closest(".minimal-article")) applyArticlePlotlySurface(jsonData.layout);
       Plotly.react(chartElement, jsonData.data, jsonData.layout);
     });
   }

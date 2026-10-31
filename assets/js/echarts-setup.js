@@ -1,4 +1,4 @@
-let echartsTheme = determineComputedTheme();
+let echartsTheme = document.querySelector(".minimal-article") ? "light" : determineComputedTheme();
 
 /* Create echarts chart as another node and hide the code block, appending the echarts node after it
        this is done to enable retrieving the code again when changing theme between light/dark */
@@ -20,7 +20,9 @@ document.addEventListener("readystatechange", () => {
         var chart = echarts.init(chartElement);
       }
 
-      chart.setOption(JSON.parse(jsonData));
+      const options = JSON.parse(jsonData);
+      if (chartElement.closest(".minimal-article")) options.backgroundColor = "#f6f8fa";
+      chart.setOption(options);
       window.addEventListener("resize", function () {
         chart.resize();
       });

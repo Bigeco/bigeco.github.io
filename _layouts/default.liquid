@@ -13,15 +13,20 @@
       <meta http-equiv="refresh" content="3; url={{ redirect }}">
     {% endif %}
     {% include head.liquid %}
+    {% if page.layout == 'post' %}{% include minimal-styles.liquid %}{% endif %}
   </head>
 
   <!-- Body -->
   <body class="{% if site.navbar_fixed %}fixed-top-nav{% endif %} {% unless site.footer_fixed %}sticky-bottom-footer{% endunless %}">
     <!-- Header -->
-    {% include header.liquid %}
+    {% if page.layout == 'post' %}
+      <div class="minimal-home minimal-article-chrome">{% include minimal-header.liquid %}</div>
+    {% else %}
+      {% include header.liquid %}
+    {% endif %}
 
     <!-- Content -->
-    <div class="container mt-5" role="main">
+    <div class="container mt-5{% if page.layout == 'post' %} minimal-article{% endif %}" role="main">
       {% if page.toc and page.toc.sidebar %}
         {% if page.toc.sidebar == 'right' %}
           <div class="row">
@@ -48,7 +53,11 @@
     </div>
 
     <!-- Footer -->
-    {% include footer.liquid %}
+    {% if page.layout == 'post' %}
+      <div class="minimal-home minimal-article-chrome">{% include minimal-footer.liquid %}</div>
+    {% else %}
+      {% include footer.liquid %}
+    {% endif %}
 
     <!-- JavaScripts -->
     {% include scripts.liquid %}

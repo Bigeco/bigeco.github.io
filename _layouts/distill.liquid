@@ -2,6 +2,7 @@
 <html>
   <head>
     {% include head.liquid %}
+    {% include minimal-styles.liquid %}
 
     <!-- Distill js -->
     <script src="{{ '/assets/js/distillpub/template.v2.js' | relative_url }}"></script>
@@ -54,10 +55,10 @@
 
   <body class="{% if site.navbar_fixed %}fixed-top-nav{% endif %} {% unless site.footer_fixed %}sticky-bottom-footer{% endunless %}">
     <!-- Header -->
-    {% include header.liquid %}
+    <div class="minimal-home minimal-article-chrome">{% include minimal-header.liquid %}</div>
 
     <!-- Content -->
-    <div class="post distill">
+    <div class="post distill minimal-article">
       <d-title>
         <h1>{{ page.title }}</h1>
         <p>{{ page.description }}</p>
@@ -123,7 +124,7 @@
     </div>
 
     <!-- Footer -->
-    {% include footer.liquid %}
+    <div class="minimal-home minimal-article-chrome">{% include minimal-footer.liquid %}</div>
 
     <!-- JavaScripts -->
     {% include distill_scripts.liquid %}
